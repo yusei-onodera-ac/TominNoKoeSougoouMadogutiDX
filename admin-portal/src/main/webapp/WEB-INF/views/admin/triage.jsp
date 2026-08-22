@@ -96,6 +96,15 @@
         </tr>
         <tr>
           <td colspan="${isGeneralDesk ? 9 : 8}" style="background:#fafbfc;">
+            <c:if test="${not empty c.submitterLastName or not empty c.submitterPhone or not empty c.submitterEmail or not empty c.submitterAddress}">
+              <div class="hint" style="margin-bottom:8px;">
+                連絡先（都民が任意で入力・回答連絡専用・個人情報のため取り扱い注意）:
+                <c:if test="${not empty c.submitterLastName}"> <c:out value="${c.submitterLastName}"/> <c:out value="${c.submitterFirstName}"/> 様</c:if>
+                <c:if test="${not empty c.submitterPhone}"> / TEL: <c:out value="${c.submitterPhone}"/></c:if>
+                <c:if test="${not empty c.submitterEmail}"> / Mail: <c:out value="${c.submitterEmail}"/></c:if>
+                <c:if test="${not empty c.submitterAddress}"> / 住所: <c:out value="${c.submitterAddress}"/></c:if>
+              </div>
+            </c:if>
             <c:choose>
               <c:when test="${not empty c.responseText}">
                 <div class="hint">回答済み（<c:out value="${c.respondedBy}"/> / <c:out value="${c.respondedAt}"/>）</div>

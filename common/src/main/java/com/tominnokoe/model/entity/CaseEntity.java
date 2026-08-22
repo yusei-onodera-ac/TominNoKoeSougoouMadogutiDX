@@ -22,6 +22,20 @@ public class CaseEntity {
     private String category;
     private String subject;
     private String body;
+    /** 区分（実際の都民の声総合窓口フォームに準拠）: "知事への提言" または "要望・苦情"。 */
+    private String division;
+
+    /**
+     * 都民の任意入力による連絡先情報（すべて任意項目、実際の都民の声総合窓口メールフォームに
+     * 準拠）。分類エンジン（RAG・LLM）には一切渡さない — プライバシー・バイ・デザインとして、
+     * 判定ロジックはあくまで件名・本文のみを根拠とする。オープンデータ出力・監査ログ・
+     * 案件一覧（トリアージ画面の簡易表示）にも含めず、案件詳細（回答画面）でのみ表示する。
+     */
+    private String submitterLastName;
+    private String submitterFirstName;
+    private String submitterAddress;
+    private String submitterPhone;
+    private String submitterEmail;
 
     private ClassificationResult classification;
     private CaseStatus status = CaseStatus.NEW;
@@ -60,6 +74,24 @@ public class CaseEntity {
 
     public String getBody() { return body; }
     public void setBody(String body) { this.body = body; }
+
+    public String getDivision() { return division; }
+    public void setDivision(String division) { this.division = division; }
+
+    public String getSubmitterLastName() { return submitterLastName; }
+    public void setSubmitterLastName(String submitterLastName) { this.submitterLastName = submitterLastName; }
+
+    public String getSubmitterFirstName() { return submitterFirstName; }
+    public void setSubmitterFirstName(String submitterFirstName) { this.submitterFirstName = submitterFirstName; }
+
+    public String getSubmitterAddress() { return submitterAddress; }
+    public void setSubmitterAddress(String submitterAddress) { this.submitterAddress = submitterAddress; }
+
+    public String getSubmitterPhone() { return submitterPhone; }
+    public void setSubmitterPhone(String submitterPhone) { this.submitterPhone = submitterPhone; }
+
+    public String getSubmitterEmail() { return submitterEmail; }
+    public void setSubmitterEmail(String submitterEmail) { this.submitterEmail = submitterEmail; }
 
     public ClassificationResult getClassification() { return classification; }
     public void setClassification(ClassificationResult classification) { this.classification = classification; }

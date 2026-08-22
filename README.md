@@ -5,6 +5,11 @@
 - **都民向けポータル（citizen-portal）と行政向け管理画面（admin-portal）は、実際には全く別のシステムとして
   それぞれ独立に動作する**（別ポート・別Tomcatインスタンス・別デプロイ）。共有するのはドメインロジック
   （`common`モジュール）とデータベースのみ。
+- 都民向け投稿フォームは、実際の[都民の声総合窓口メールフォーム](https://logoform.jp/form/tmgform/344142)
+  （[案内ページ](https://www.metro.tokyo.lg.jp/tosei/iken-sodan/tominnokoe)、
+  [留意事項](https://www.metro.tokyo.lg.jp/tosei/iken-sodan/tominnokoe/ryuijikou)）の項目構成
+  （区分・タイトル・コメント・氏名・住所・電話番号・メールアドレス）に準拠している。連絡先情報は
+  すべて任意項目で、分類エンジンには一切渡さない（プライバシー・バイ・デザイン）。
 - 判定エンジンは**Gemini APIとルールベースのモックのハイブリッド**。`GEMINI_API_KEY`環境変数が
   設定されていれば実際にGemini APIを呼び出して判定し、未設定時や呼び出し失敗時（ネットワークエラー・
   レスポンス解析失敗等）はルールベースのモックへ自動フォールバックする（
