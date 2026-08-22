@@ -10,6 +10,7 @@ import com.tominnokoe.admin.web.servlet.AdminInappropriateServlet;
 import com.tominnokoe.admin.web.servlet.AdminIndexServlet;
 import com.tominnokoe.admin.web.servlet.AdminLoginServlet;
 import com.tominnokoe.admin.web.servlet.AdminLogoutServlet;
+import com.tominnokoe.admin.web.servlet.AdminManualIntakeServlet;
 import com.tominnokoe.admin.web.servlet.AdminOpenDataExportServlet;
 import com.tominnokoe.admin.web.servlet.AdminOpenDataServlet;
 import com.tominnokoe.admin.web.servlet.AdminTriageServlet;
@@ -58,6 +59,7 @@ final class ServletRegistrar {
         addServlet(tomcat, ctx, "adminLogin", new AdminLoginServlet(), "/admin/login");
         addServlet(tomcat, ctx, "adminLogout", new AdminLogoutServlet(), "/admin/logout");
         addServlet(tomcat, ctx, "adminTriage", new AdminTriageServlet(), "/admin/triage");
+        addServlet(tomcat, ctx, "adminManualIntake", new AdminManualIntakeServlet(), "/admin/manual-intake");
         addServlet(tomcat, ctx, "adminInappropriate", new AdminInappropriateServlet(), "/admin/inappropriate");
         addServlet(tomcat, ctx, "adminGovernance", new AdminGovernanceServlet(), "/admin/governance");
         addServlet(tomcat, ctx, "adminGuidance", new AdminGuidanceServlet(), "/admin/guidance");

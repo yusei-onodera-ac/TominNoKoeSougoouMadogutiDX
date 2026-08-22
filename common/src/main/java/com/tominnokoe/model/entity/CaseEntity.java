@@ -1,6 +1,7 @@
 package com.tominnokoe.model.entity;
 
 import com.tominnokoe.model.enums.CaseStatus;
+import com.tominnokoe.model.enums.IntakeChannel;
 import com.tominnokoe.model.enums.NotificationStatus;
 import com.tominnokoe.model.vo.ClassificationResult;
 
@@ -24,6 +25,11 @@ public class CaseEntity {
 
     private ClassificationResult classification;
     private CaseStatus status = CaseStatus.NEW;
+
+    /** 受付チャネル（WEB_FORMのみ都民本人による完全自動投稿、他は職員代筆入力）。 */
+    private IntakeChannel intakeChannel = IntakeChannel.WEB_FORM;
+    /** 代筆入力した局（WEB_FORM以外の場合のみ設定）。 */
+    private String intakeStaffBureau;
 
     /** 総合窓口職員が手動で上書きした担当局（UNKNOWN案件のトリアージ結果など）。 */
     private String assignedBureauOverride;
@@ -60,6 +66,12 @@ public class CaseEntity {
 
     public CaseStatus getStatus() { return status; }
     public void setStatus(CaseStatus status) { this.status = status; }
+
+    public IntakeChannel getIntakeChannel() { return intakeChannel; }
+    public void setIntakeChannel(IntakeChannel intakeChannel) { this.intakeChannel = intakeChannel; }
+
+    public String getIntakeStaffBureau() { return intakeStaffBureau; }
+    public void setIntakeStaffBureau(String intakeStaffBureau) { this.intakeStaffBureau = intakeStaffBureau; }
 
     public String getAssignedBureauOverride() { return assignedBureauOverride; }
     public void setAssignedBureauOverride(String assignedBureauOverride) { this.assignedBureauOverride = assignedBureauOverride; }

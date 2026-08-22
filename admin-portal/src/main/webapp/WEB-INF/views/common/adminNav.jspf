@@ -13,6 +13,7 @@
 </header>
 <nav class="admin-nav">
   <a href="<%=request.getContextPath()%>/admin/triage" class="<%="triage".equals(request.getAttribute("currentPage")) ? "active" : ""%>">トリアージ・案件一覧</a>
+  <a href="<%=request.getContextPath()%>/admin/manual-intake" class="<%="manual-intake".equals(request.getAttribute("currentPage")) ? "active" : ""%>">電話・FAX・窓口 代筆入力</a>
   <% if (isGeneralDesk) { %>
   <a href="<%=request.getContextPath()%>/admin/inappropriate" class="<%="inappropriate".equals(request.getAttribute("currentPage")) ? "active" : ""%>">不適切監査ビュー</a>
   <% } %>

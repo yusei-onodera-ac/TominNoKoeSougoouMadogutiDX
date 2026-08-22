@@ -47,7 +47,7 @@
     <table>
       <thead>
       <tr>
-        <th>受付番号</th><th>受付日時</th><th>件名</th><th>分類</th><th>confidence</th>
+        <th>受付番号</th><th>受付チャネル</th><th>受付日時</th><th>件名</th><th>分類</th><th>confidence</th>
         <th>担当局</th><th>ステータス</th>
         <c:if test="${isGeneralDesk}"><th>手動アサイン</th></c:if>
       </tr>
@@ -55,7 +55,17 @@
       <tbody>
       <c:forEach var="c" items="${cases}">
         <tr>
-          <td><a href="${pageContext.request.contextPath}/cases/${c.id}"><c:out value="${c.id}"/></a></td>
+          <td><a href="${citizenPortalBaseUrl}/cases/${c.id}" target="_blank" rel="noopener"><c:out value="${c.id}"/></a></td>
+          <td>
+            <c:choose>
+              <c:when test="${c.intakeChannel == 'WEB_FORM'}">Web投稿</c:when>
+              <c:when test="${c.intakeChannel == 'PHONE'}">電話（<c:out value="${c.intakeStaffBureau}"/>代筆）</c:when>
+              <c:when test="${c.intakeChannel == 'FAX'}">FAX（<c:out value="${c.intakeStaffBureau}"/>代筆）</c:when>
+              <c:when test="${c.intakeChannel == 'VISIT'}">窓口来訪（<c:out value="${c.intakeStaffBureau}"/>代筆）</c:when>
+              <c:when test="${c.intakeChannel == 'LETTER'}">手紙（<c:out value="${c.intakeStaffBureau}"/>代筆）</c:when>
+              <c:when test="${c.intakeChannel == 'OPINION_BOX'}">意見箱（<c:out value="${c.intakeStaffBureau}"/>代筆）</c:when>
+            </c:choose>
+          </td>
           <td><c:out value="${c.createdAt}"/></td>
           <td><c:out value="${c.subject}"/></td>
           <td>
@@ -85,7 +95,7 @@
           </c:if>
         </tr>
         <tr>
-          <td colspan="${isGeneralDesk ? 8 : 7}" style="background:#fafbfc;">
+          <td colspan="${isGeneralDesk ? 9 : 8}" style="background:#fafbfc;">
             <c:choose>
               <c:when test="${not empty c.responseText}">
                 <div class="hint">回答済み（<c:out value="${c.respondedBy}"/> / <c:out value="${c.respondedAt}"/>）</div>
@@ -106,7 +116,7 @@
         </tr>
       </c:forEach>
       <c:if test="${empty cases}">
-        <tr><td colspan="8" class="hint">該当する案件はありません。</td></tr>
+        <tr><td colspan="9" class="hint">該当する案件はありません。</td></tr>
       </c:if>
       </tbody>
     </table>

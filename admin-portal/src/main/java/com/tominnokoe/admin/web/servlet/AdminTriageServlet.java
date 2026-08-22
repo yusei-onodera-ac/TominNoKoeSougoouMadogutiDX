@@ -62,6 +62,10 @@ public class AdminTriageServlet extends HttpServlet {
         request.setAttribute("bureauFilter", bureauFilter);
         request.setAttribute("isGeneralDesk", isGeneralDesk);
         request.setAttribute("sessionBureau", sessionBureau);
+        // admin-portalとcitizen-portalは別アプリ・別ポートで動作するため、都民向け確認画面への
+        // リンクは絶対URLで組み立てる（環境変数で本番の実URLへ差し替え可能）。
+        request.setAttribute("citizenPortalBaseUrl",
+                System.getenv().getOrDefault("CITIZEN_PORTAL_BASE_URL", "http://localhost:8080"));
         request.setAttribute("csrfToken", CsrfTokenManager.getOrCreateToken(request));
         request.getRequestDispatcher("/WEB-INF/views/admin/triage.jsp").forward(request, response);
     }
