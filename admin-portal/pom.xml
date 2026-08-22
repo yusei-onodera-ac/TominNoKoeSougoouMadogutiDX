@@ -47,13 +47,6 @@
       <artifactId>jakarta.servlet.jsp.jstl</artifactId>
       <version>3.0.1</version>
     </dependency>
-
-    <!-- 通知配信（メール送信、純Java実装） -->
-    <dependency>
-      <groupId>org.eclipse.angus</groupId>
-      <artifactId>angus-mail</artifactId>
-      <version>${angus-mail.version}</version>
-    </dependency>
   </dependencies>
 
   <build>

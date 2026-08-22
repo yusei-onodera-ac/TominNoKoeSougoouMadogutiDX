@@ -8,7 +8,8 @@
     "jurisdictionScope": "都道の維持管理、街路樹の管理、道路照明・舗装の補修",
     "keywords": ["街路樹", "剪定", "道路", "都道", "陥没", "街灯", "舗装", "環八", "環八通り", "歩道"],
     "categoryHint": "道路・交通",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "doro-kanri@kensetsu.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-02",
@@ -19,7 +20,8 @@
     "jurisdictionScope": "都立公園・都立霊園の管理運営",
     "keywords": ["都立公園", "公園", "みどり", "緑地", "代々木公園", "日比谷公園", "上野公園", "戸山公園"],
     "categoryHint": "環境・みどり",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "koen-ryokuchi@kensetsu.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-03",
@@ -30,7 +32,8 @@
     "jurisdictionScope": "放置自転車対策、自転車駐車場の整備",
     "keywords": ["放置自転車", "違法駐輪", "駐輪場", "自転車"],
     "categoryHint": "道路・交通",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "jitensha-taisaku@kensetsu.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-04",
@@ -41,7 +44,8 @@
     "jurisdictionScope": "都営バスの路線・運行本数の計画",
     "keywords": ["都営バス", "バス", "増便", "路線", "運行本数", "バス停"],
     "categoryHint": "交通",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "bus-rosen@kotsu.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-05",
@@ -52,7 +56,8 @@
     "jurisdictionScope": "介護保険制度の運用、高齢者福祉施設の指導",
     "keywords": ["介護", "高齢者", "福祉施設", "特別養護老人ホーム", "介護保険"],
     "categoryHint": "福祉",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "kaigo-hoken@fukushi.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-06",
@@ -63,7 +68,8 @@
     "jurisdictionScope": "大気汚染・騒音・振動・悪臭の規制指導",
     "keywords": ["大気汚染", "騒音", "悪臭", "振動", "公害"],
     "categoryHint": "環境",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "taiki-hozen@kankyo.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-07",
@@ -74,7 +80,8 @@
     "jurisdictionScope": "建築確認、違反建築物の是正指導、日影紛争調整",
     "keywords": ["違法建築", "建築確認", "日照", "マンション紛争", "建築紛争"],
     "categoryHint": "都市整備",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "kenchiku-shido@toshiseibi.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-08",
@@ -85,7 +92,8 @@
     "jurisdictionScope": "都管理河川の維持管理、治水対策",
     "keywords": ["河川", "護岸", "氾濫", "治水", "水害"],
     "categoryHint": "河川・水害",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "kasen-kanri@kensetsu.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-09",
@@ -96,7 +104,8 @@
     "jurisdictionScope": "水道の給水・水質管理",
     "keywords": ["水道", "断水", "水漏れ", "水質", "濁り水"],
     "categoryHint": "上下水道",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "kyusui@suido.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-10",
@@ -107,7 +116,8 @@
     "jurisdictionScope": "下水道施設の維持管理、浸水対策",
     "keywords": ["下水", "悪臭", "マンホール", "浸水", "下水道"],
     "categoryHint": "上下水道",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "haisui-setsubi@gesuido.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-11",
@@ -118,7 +128,8 @@
     "jurisdictionScope": "都立学校の運営・教育指導",
     "keywords": ["都立高校", "都立学校", "教育", "いじめ", "校則"],
     "categoryHint": "教育",
-    "headOffice": false
+    "headOffice": false,
+    "contactEmail": "gakumu@kyoiku.section.tominnokoe-demo.jp"
   },
   {
     "id": "org-12",
@@ -129,6 +140,7 @@
     "jurisdictionScope": "他局の所掌に明確に該当しない案件、複数局にまたがる案件の総合調整、分類不能案件の手動トリアージ",
     "keywords": [],
     "categoryHint": null,
-    "headOffice": true
+    "headOffice": true,
+    "contactEmail": "tominnokoe-sogo@seisakukikaku.section.tominnokoe-demo.jp"
   }
 ]

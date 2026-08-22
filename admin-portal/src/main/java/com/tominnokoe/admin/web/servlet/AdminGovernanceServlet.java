@@ -2,8 +2,11 @@ package com.tominnokoe.admin.web.servlet;
 
 import com.tominnokoe.dao.AuditLog;
 import com.tominnokoe.dao.CaseRepository;
+import com.tominnokoe.dao.OrgRuleLookup;
 import com.tominnokoe.model.entity.CaseEntity;
 import com.tominnokoe.model.enums.NotificationStatus;
+import com.tominnokoe.notification.NotificationDispatcher;
+import com.tominnokoe.notification.NotificationMessage;
 import com.tominnokoe.admin.security.CsrfTokenManager;
 import com.tominnokoe.admin.web.filter.AdminAuthFilter;
 
@@ -61,8 +64,19 @@ public class AdminGovernanceServlet extends HttpServlet {
         CaseRepository.getInstance().update(entity);
 
         String actor = (String) request.getSession().getAttribute(AdminAuthFilter.SESSION_KEY);
-        AuditLog.getInstance().record(actor, "NOTIFICATION_STATUS_CHANGE", caseId,
-                departmentName + " のステータスを " + current + " → " + next + " に変更");
+        String logDetails = departmentName + " のステータスを " + current + " → " + next + " に変更";
+
+        // NOTIFIED へ遷移した場合、実際に通知配信（メール/Slack）を試みる
+        // （SMTP_HOST/SLACK_WEBHOOK_URL等が未設定の場合は自動でスキップされ、アプリは壊れない）。
+        if (next == NotificationStatus.NOTIFIED) {
+            String recipientEmail = OrgRuleLookup.findContactEmail(departmentName);
+            NotificationMessage message = new NotificationMessage(
+                    caseId, departmentName, "実務対応・状況共有", entity.getSubject(), recipientEmail);
+            List<String> dispatchResults = NotificationDispatcher.getInstance().dispatch(message);
+            logDetails += " / 通知配信結果: " + String.join(", ", dispatchResults);
+        }
+
+        AuditLog.getInstance().record(actor, "NOTIFICATION_STATUS_CHANGE", caseId, logDetails);
 
         response.sendRedirect(request.getContextPath() + "/admin/governance");
     }

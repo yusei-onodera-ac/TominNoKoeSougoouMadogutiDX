@@ -40,5 +40,11 @@
       <artifactId>h2</artifactId>
       <version>${h2.version}</version>
     </dependency>
+    <!-- 通知配信（メール送信、純Java実装）。Slack通知はJDK標準HttpClientのみで実装するため追加依存なし。 -->
+    <dependency>
+      <groupId>org.eclipse.angus</groupId>
+      <artifactId>angus-mail</artifactId>
+      <version>${angus-mail.version}</version>
+    </dependency>
   </dependencies>
 </project>

@@ -78,6 +78,29 @@ mvn -pl citizen-portal exec:java
 Google側のAPI仕様・モデル名は変更されうるため、呼び出しに失敗した場合は自動的にルールベースの
 モックへフォールバックし、アプリは落ちない（ログに警告が出力される）。
 
+### 実際の通知配信（メール／Slack）を使う場合
+
+`/admin/governance` で通知ステータスを「NOTIFIED」へ進めると、実際にメール・Slackへの通知配信を
+試みる（[`NotificationDispatcher`](common/src/main/java/com/tominnokoe/notification/NotificationDispatcher.java)）。
+いずれも未設定の場合は安全にスキップされ（監査ログに記録）、アプリは壊れない。
+
+```bash
+# メール通知（Jakarta Mail / Angus Mail、純Java実装）
+export SMTP_HOST="smtp.example.com"
+export SMTP_PORT="587"
+export SMTP_USERNAME="..."
+export SMTP_PASSWORD="..."
+export MAIL_FROM="tominnokoe-noreply@example.com"
+
+# Slack通知（Incoming Webhook）
+export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/..."
+
+mvn -pl admin-portal exec:java
+```
+
+通知先メールアドレスは事務分掌データ（`org_jurisdiction_rules.json`）の`contactEmail`列
+（デモ用のダミードメイン）から解決する。実在の東京都ドメインではない。
+
 ## デモの見せ方（5つのベンチマークカテゴリ）
 
 `/submit`（都民向けポータル、8080番）から以下のような投稿を行うと、それぞれ異なる分類・ルーティングが

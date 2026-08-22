@@ -22,6 +22,11 @@ public class OrgRuleEntity {
     private String categoryHint;
     /** 総合窓口（政策企画局）のフォールバック行かどうか。 */
     private boolean headOffice;
+    /**
+     * ガバナンス通知チェーンの通知配信先（デモ用のダミードメイン）。
+     * 実在の東京都ドメインではないことに注意（誤送信・なりすまし防止のため）。
+     */
+    private String contactEmail;
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -49,4 +54,7 @@ public class OrgRuleEntity {
 
     public boolean isHeadOffice() { return headOffice; }
     public void setHeadOffice(boolean headOffice) { this.headOffice = headOffice; }
+
+    public String getContactEmail() { return contactEmail; }
+    public void setContactEmail(String contactEmail) { this.contactEmail = contactEmail; }
 }
