@@ -15,17 +15,22 @@ public final class BureauScope {
     private BureauScope() {
     }
 
-    /** セッションの局が、この案件を閲覧・操作できるかどうか。 */
+    /**
+     * セッションの局が、この案件を（通常のトリアージ・ガバナンス通知画面で）閲覧・操作できるかどうか。
+     * 不適切フラグの立った案件は、政策企画局（総合窓口）であっても常にfalseを返す
+     * — 隔離監査ビュー（{@code /admin/inappropriate}）専用の別クエリで扱うため、
+     * 通常のトリアージ一覧に混入させない（F-A02の隔離設計を局横断アカウントでも徹底する）。
+     */
     public static boolean isVisible(CaseEntity entity, String sessionBureau) {
         if (sessionBureau == null) {
             return false;
         }
-        if (BureauAccountRegistry.isGeneralDesk(sessionBureau)) {
-            return true;
-        }
         ClassificationResult classification = entity.getClassification();
         if (classification == null || classification.isInappropriate()) {
-            return false; // 不適切キューは政策企画局専用
+            return false;
+        }
+        if (BureauAccountRegistry.isGeneralDesk(sessionBureau)) {
+            return true;
         }
 
         String primaryBureau = entity.getAssignedBureauOverride() != null

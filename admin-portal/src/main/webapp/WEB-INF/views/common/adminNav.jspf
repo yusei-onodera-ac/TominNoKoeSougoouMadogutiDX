@@ -1,6 +1,11 @@
 <%-- 管理系画面共通ナビゲーション。currentPage リクエスト属性でアクティブタブを判定する。
      不適切監査ビュー・区市町村案内文・オープンデータ公表は政策企画局（総合窓口）専用のため、
-     それ以外の局アカウントには表示しない（アクセス制御自体はGeneralDeskOnlyFilterで行う）。 --%>
+     それ以外の局アカウントには表示しない（アクセス制御自体はGeneralDeskOnlyFilterで行う）。
+
+     このフラグメント自体に pageEncoding を明記しておく必要がある — <%@ include %>（静的インクルード）で
+     取り込まれる際、これが無いとJasperがこのファイルをUTF-8以外（既定/ISO-8859-1相当）として
+     解釈し、この中の日本語リテラルだけが文字化けする不具合が実際に発生したため。 --%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.tominnokoe.security.BureauAccountRegistry" %>
 <%@ page import="com.tominnokoe.admin.web.filter.AdminAuthFilter" %>
 <%
@@ -9,9 +14,10 @@
     request.setAttribute("navSessionBureau", sessionBureau);
 %>
 <header class="site-header">
-  <p class="site-title">都民の声 次世代ハイブリッド仕分けプラットフォーム（管理画面）</p>
+  <p class="site-title"><a href="<%=request.getContextPath()%>/admin" style="color:#fff; text-decoration:none;">都民の声 次世代ハイブリッド仕分けプラットフォーム（管理画面）</a></p>
 </header>
 <nav class="admin-nav">
+  <a href="<%=request.getContextPath()%>/admin" class="<%="dashboard".equals(request.getAttribute("currentPage")) ? "active" : ""%>">ダッシュボード</a>
   <a href="<%=request.getContextPath()%>/admin/triage" class="<%="triage".equals(request.getAttribute("currentPage")) ? "active" : ""%>">トリアージ・案件一覧</a>
   <a href="<%=request.getContextPath()%>/admin/manual-intake" class="<%="manual-intake".equals(request.getAttribute("currentPage")) ? "active" : ""%>">電話・FAX・窓口 代筆入力</a>
   <% if (isGeneralDesk) { %>

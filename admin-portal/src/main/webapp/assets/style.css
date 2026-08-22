@@ -177,3 +177,92 @@ textarea:focus-visible,
 }
 
 table th { text-align: left; }
+
+/* --- ダッシュボード（よく使うメニュー パネルボタン / 応用的な設定） --- */
+.dashboard-section-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--muted);
+  margin: 0 0 12px;
+  letter-spacing: 0.02em;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.panel-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 12px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: var(--radius);
+  text-decoration: none;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.panel-button:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.panel-button svg { width: 32px; height: 32px; fill: none; stroke: #fff; stroke-width: 1.6; }
+
+details.advanced-section {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel-bg);
+  margin-bottom: 20px;
+}
+details.advanced-section summary {
+  cursor: pointer;
+  padding: 14px 18px;
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--primary-dark);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+details.advanced-section summary::-webkit-details-marker { display: none; }
+details.advanced-section summary::before {
+  content: "\25B8";
+  display: inline-block;
+  transition: transform 0.15s ease;
+  color: var(--primary);
+}
+details.advanced-section[open] summary::before { transform: rotate(90deg); }
+details.advanced-section .advanced-body {
+  padding: 4px 18px 18px;
+  border-top: 1px solid var(--border);
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+.pill-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid var(--primary);
+  color: var(--primary-dark);
+  background: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 13px;
+}
+.pill-button:hover { background: var(--primary); color: #fff; }
+.pill-category-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 14px 0 0;
+}
