@@ -8,10 +8,11 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">本文へスキップ</a>
 <header class="site-header">
   <p class="site-title">都民の声 次世代ハイブリッド仕分け・公表プラットフォーム（プロトタイプ）</p>
 </header>
-<main>
+<main id="main-content">
   <p><a href="${pageContext.request.contextPath}/">&larr; トップへ戻る</a></p>
   <div class="card">
     <h1>ご意見を受け付けました</h1>

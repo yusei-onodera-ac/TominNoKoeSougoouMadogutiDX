@@ -9,15 +9,16 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">本文へスキップ</a>
 <%@ include file="/WEB-INF/views/common/adminNav.jspf" %>
-<main>
+<main id="main-content">
   <div class="card">
     <h1>不適切・規約違反監査ビュー</h1>
     <p class="hint">政策企画局専用の隔離枠です。各局へは通知されません。誤検知の場合は復元してください（監査ログに記録されます）。</p>
 
     <table>
       <thead>
-      <tr><th>受付番号</th><th>受付日時</th><th>件名</th><th>理由</th><th>本文（一部）</th><th>操作</th></tr>
+      <tr><th scope="col">受付番号</th><th scope="col">受付日時</th><th scope="col">件名</th><th scope="col">理由</th><th scope="col">本文（一部）</th><th scope="col">操作</th></tr>
       </thead>
       <tbody>
       <c:forEach var="c" items="${cases}">

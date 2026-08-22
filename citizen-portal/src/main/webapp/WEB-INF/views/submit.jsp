@@ -9,10 +9,11 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">本文へスキップ</a>
 <header class="site-header">
   <p class="site-title">都民の声総合窓口 メールフォーム（次世代ハイブリッド仕分けプラットフォーム・プロトタイプ）</p>
 </header>
-<main>
+<main id="main-content">
   <p><a href="${pageContext.request.contextPath}/">&larr; トップへ戻る</a></p>
   <div class="grid-2">
     <div class="card">
@@ -36,8 +37,8 @@
       <form method="post" action="${pageContext.request.contextPath}/submit" id="submitForm">
         <input type="hidden" name="csrfToken" value="${csrfToken}">
 
-        <label>区分：どちらか選択してください</label>
-        <div style="margin-bottom:14px;">
+        <fieldset style="border:1px solid var(--border); border-radius:6px; padding:12px 14px; margin-bottom:14px;">
+          <legend style="font-size:13px; font-weight:bold; padding:0 4px;">区分：どちらか選択してください</legend>
           <label style="font-weight:normal; display:flex; align-items:flex-start; gap:6px;">
             <input type="radio" name="division" value="知事への提言" required style="width:auto; margin-top:4px;">
             <span>知事への提言 <span class="hint">— 都政に対する提言・意見をお寄せください</span></span>
@@ -46,7 +47,7 @@
             <input type="radio" name="division" value="要望・苦情" style="width:auto; margin-top:4px;">
             <span>要望・苦情 <span class="hint">— 都の事業や職員の対応についての要望・苦情</span></span>
           </label>
-        </div>
+        </fieldset>
 
         <label for="subject">タイトル（全角100文字まで）【任意】</label>
         <input type="text" id="subject" name="subject" maxlength="100" value="${fn:escapeXml(param.subject)}">

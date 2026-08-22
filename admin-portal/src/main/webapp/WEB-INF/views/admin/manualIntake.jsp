@@ -10,8 +10,9 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">本文へスキップ</a>
 <%@ include file="/WEB-INF/views/common/adminNav.jspf" %>
-<main style="max-width: 640px;">
+<main id="main-content" style="max-width: 640px;">
   <div class="card">
     <h1>電話・FAX・窓口・手紙・意見箱 代筆入力</h1>
     <p class="hint">

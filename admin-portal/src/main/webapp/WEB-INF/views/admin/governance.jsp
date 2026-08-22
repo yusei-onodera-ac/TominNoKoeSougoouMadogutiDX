@@ -9,8 +9,9 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">本文へスキップ</a>
 <%@ include file="/WEB-INF/views/common/adminNav.jspf" %>
-<main>
+<main id="main-content">
   <h1>ガバナンス通知・進捗管理</h1>
   <p class="hint">現場出先機関（Action Owner）だけでなく、上位の局・部・総合窓口へも同時に状況が共有される階層別ステータスです。クリックで次のステータスへ進みます。</p>
 
@@ -18,7 +19,7 @@
     <div class="card">
       <h2><c:out value="${c.id}"/>: <c:out value="${c.subject}"/></h2>
       <table>
-        <thead><tr><th>階層</th><th>部署</th><th>目的</th><th>ステータス</th><th></th></tr></thead>
+        <thead><tr><th scope="col">階層</th><th scope="col">部署</th><th scope="col">目的</th><th scope="col">ステータス</th><th scope="col"></th></tr></thead>
         <tbody>
         <c:forEach var="node" items="${c.classification.routing.governanceNotificationTree}">
           <tr>

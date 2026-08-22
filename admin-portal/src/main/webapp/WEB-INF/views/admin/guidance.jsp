@@ -9,8 +9,9 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">本文へスキップ</a>
 <%@ include file="/WEB-INF/views/common/adminNav.jspf" %>
-<main>
+<main id="main-content">
   <h1>区市町村向け案内状・回答文ドラフト</h1>
   <p class="hint">都の管轄外と判定された案件について、AIが起案した案内文です。「再生成」で言い回しを変更できます。</p>
 

@@ -31,7 +31,7 @@ public final class ChartRenderer {
         int barHeight = Math.max(10, (chartHeight / Math.max(1, data.size())) - barGap);
 
         StringBuilder svg = new StringBuilder();
-        svg.append(svgOpen(width, height));
+        svg.append(svgOpen(width, height, title));
         svg.append(titleText(title, width));
 
         int i = 0;
@@ -64,7 +64,7 @@ public final class ChartRenderer {
         double r = Math.min(cx, cy) - 20;
 
         StringBuilder svg = new StringBuilder();
-        svg.append(svgOpen(width, height));
+        svg.append(svgOpen(width, height, title));
         svg.append(titleText(title, width));
 
         double startAngle = -90;
@@ -104,7 +104,7 @@ public final class ChartRenderer {
         int chartHeight = height - marginTop - marginBottom;
 
         StringBuilder svg = new StringBuilder();
-        svg.append(svgOpen(width, height));
+        svg.append(svgOpen(width, height, title));
         svg.append(titleText(title, width));
 
         StringBuilder points = new StringBuilder();
@@ -138,10 +138,16 @@ public final class ChartRenderer {
                 cx, cy, x1, y1, r, r, largeArc, x2, y2, color);
     }
 
-    private static String svgOpen(int width, int height) {
-        return String.format(
-                "<svg viewBox=\"0 0 %d %d\" width=\"100%%\" height=\"auto\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\">",
-                width, height);
+    /** アクセシビリティ対応: role="img" と &lt;title&gt; 要素の両方でスクリーンリーダーに図の内容を伝える。 */
+    private static String svgOpen(int width, int height, String accessibleTitle) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(
+                "<svg viewBox=\"0 0 %d %d\" width=\"100%%\" height=\"auto\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"%s>",
+                width, height, accessibleTitle == null ? "" : " aria-label=\"" + escapeXml(accessibleTitle) + "\""));
+        if (accessibleTitle != null) {
+            sb.append("<title>").append(escapeXml(accessibleTitle)).append("</title>");
+        }
+        return sb.toString();
     }
 
     private static String titleText(String title, int width) {
@@ -152,7 +158,7 @@ public final class ChartRenderer {
 
     private static String emptyChart(String title, int width, int height) {
         StringBuilder svg = new StringBuilder();
-        svg.append(svgOpen(width, height));
+        svg.append(svgOpen(width, height, title));
         svg.append(titleText(title, width));
         svg.append(String.format(
                 "<text x=\"%d\" y=\"%d\" font-size=\"12\" text-anchor=\"middle\" fill=\"currentColor\">データがありません</text>",

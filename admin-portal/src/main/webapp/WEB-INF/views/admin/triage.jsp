@@ -11,8 +11,9 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">本文へスキップ</a>
 <%@ include file="/WEB-INF/views/common/adminNav.jspf" %>
-<main>
+<main id="main-content">
   <div class="card">
     <c:choose>
       <c:when test="${isGeneralDesk}">
@@ -47,9 +48,9 @@
     <table>
       <thead>
       <tr>
-        <th>受付番号</th><th>受付チャネル</th><th>受付日時</th><th>件名</th><th>分類</th><th>confidence</th>
-        <th>担当局</th><th>ステータス</th>
-        <c:if test="${isGeneralDesk}"><th>手動アサイン</th></c:if>
+        <th scope="col">受付番号</th><th scope="col">受付チャネル</th><th scope="col">受付日時</th><th scope="col">件名</th><th scope="col">分類</th><th scope="col">confidence</th>
+        <th scope="col">担当局</th><th scope="col">ステータス</th>
+        <c:if test="${isGeneralDesk}"><th scope="col">手動アサイン</th></c:if>
       </tr>
       </thead>
       <tbody>

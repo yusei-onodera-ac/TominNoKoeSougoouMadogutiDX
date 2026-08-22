@@ -8,10 +8,11 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">本文へスキップ</a>
 <header class="site-header">
   <p class="site-title">都民の声 次世代ハイブリッド仕分けプラットフォーム（管理画面）</p>
 </header>
-<main style="max-width: 460px;">
+<main id="main-content" style="max-width: 460px;">
   <div class="card">
     <h1>職員ログイン</h1>
     <p class="hint">所属局を選択してログインしてください。「政策企画局」は都民の声総合窓口として全案件を横断的に確認できます。</p>

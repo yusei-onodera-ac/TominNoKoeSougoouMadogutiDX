@@ -10,8 +10,9 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">本文へスキップ</a>
 <%@ include file="/WEB-INF/views/common/adminNav.jspf" %>
-<main>
+<main id="main-content">
   <div class="card">
     <h1>オープンデータ公表ページ</h1>
     <p class="hint">個人情報を自動マスキングした集計データです。生の意見本文・氏名・連絡先は一切含まれません。</p>
