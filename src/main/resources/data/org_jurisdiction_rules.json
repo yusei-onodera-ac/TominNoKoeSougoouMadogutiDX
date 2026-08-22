@@ -1,0 +1,134 @@
+[
+  {
+    "id": "org-01",
+    "bureauName": "建設局",
+    "divisionName": "道路管理部",
+    "sectionName": "道路管理課",
+    "actionOwner": "建設局 第一建設事務所",
+    "jurisdictionScope": "都道の維持管理、街路樹の管理、道路照明・舗装の補修",
+    "keywords": ["街路樹", "剪定", "道路", "都道", "陥没", "街灯", "舗装", "環八", "環八通り", "歩道"],
+    "categoryHint": "道路・交通",
+    "headOffice": false
+  },
+  {
+    "id": "org-02",
+    "bureauName": "建設局",
+    "divisionName": "公園緑地部",
+    "sectionName": "公園計画課",
+    "actionOwner": "建設局 東部公園緑地事務所",
+    "jurisdictionScope": "都立公園・都立霊園の管理運営",
+    "keywords": ["都立公園", "公園", "みどり", "緑地", "代々木公園", "日比谷公園", "上野公園", "戸山公園"],
+    "categoryHint": "環境・みどり",
+    "headOffice": false
+  },
+  {
+    "id": "org-03",
+    "bureauName": "建設局",
+    "divisionName": "道路管理部",
+    "sectionName": "自転車対策課",
+    "actionOwner": "建設局 交通対策事務所",
+    "jurisdictionScope": "放置自転車対策、自転車駐車場の整備",
+    "keywords": ["放置自転車", "違法駐輪", "駐輪場", "自転車"],
+    "categoryHint": "道路・交通",
+    "headOffice": false
+  },
+  {
+    "id": "org-04",
+    "bureauName": "交通局",
+    "divisionName": "自動車部",
+    "sectionName": "バス路線課",
+    "actionOwner": "交通局 自動車部 都営バス運行管理所",
+    "jurisdictionScope": "都営バスの路線・運行本数の計画",
+    "keywords": ["都営バス", "バス", "増便", "路線", "運行本数", "バス停"],
+    "categoryHint": "交通",
+    "headOffice": false
+  },
+  {
+    "id": "org-05",
+    "bureauName": "福祉局",
+    "divisionName": "高齢社会対策部",
+    "sectionName": "介護保険課",
+    "actionOwner": "福祉局 高齢社会対策部",
+    "jurisdictionScope": "介護保険制度の運用、高齢者福祉施設の指導",
+    "keywords": ["介護", "高齢者", "福祉施設", "特別養護老人ホーム", "介護保険"],
+    "categoryHint": "福祉",
+    "headOffice": false
+  },
+  {
+    "id": "org-06",
+    "bureauName": "環境局",
+    "divisionName": "環境改善部",
+    "sectionName": "大気保全課",
+    "actionOwner": "環境局 環境改善部",
+    "jurisdictionScope": "大気汚染・騒音・振動・悪臭の規制指導",
+    "keywords": ["大気汚染", "騒音", "悪臭", "振動", "公害"],
+    "categoryHint": "環境",
+    "headOffice": false
+  },
+  {
+    "id": "org-07",
+    "bureauName": "都市整備局",
+    "divisionName": "市街地建築部",
+    "sectionName": "建築指導課",
+    "actionOwner": "都市整備局 市街地建築部",
+    "jurisdictionScope": "建築確認、違反建築物の是正指導、日影紛争調整",
+    "keywords": ["違法建築", "建築確認", "日照", "マンション紛争", "建築紛争"],
+    "categoryHint": "都市整備",
+    "headOffice": false
+  },
+  {
+    "id": "org-08",
+    "bureauName": "建設局",
+    "divisionName": "河川部",
+    "sectionName": "河川管理課",
+    "actionOwner": "建設局 第四建設事務所",
+    "jurisdictionScope": "都管理河川の維持管理、治水対策",
+    "keywords": ["河川", "護岸", "氾濫", "治水", "水害"],
+    "categoryHint": "河川・水害",
+    "headOffice": false
+  },
+  {
+    "id": "org-09",
+    "bureauName": "水道局",
+    "divisionName": "給水部",
+    "sectionName": "給水課",
+    "actionOwner": "水道局 給水部 サービスステーション",
+    "jurisdictionScope": "水道の給水・水質管理",
+    "keywords": ["水道", "断水", "水漏れ", "水質", "濁り水"],
+    "categoryHint": "上下水道",
+    "headOffice": false
+  },
+  {
+    "id": "org-10",
+    "bureauName": "下水道局",
+    "divisionName": "施設管理部",
+    "sectionName": "排水設備課",
+    "actionOwner": "下水道局 施設管理部",
+    "jurisdictionScope": "下水道施設の維持管理、浸水対策",
+    "keywords": ["下水", "悪臭", "マンホール", "浸水", "下水道"],
+    "categoryHint": "上下水道",
+    "headOffice": false
+  },
+  {
+    "id": "org-11",
+    "bureauName": "教育庁",
+    "divisionName": "都立学校教育部",
+    "sectionName": "学務課",
+    "actionOwner": "教育庁 都立学校教育部",
+    "jurisdictionScope": "都立学校の運営・教育指導",
+    "keywords": ["都立高校", "都立学校", "教育", "いじめ", "校則"],
+    "categoryHint": "教育",
+    "headOffice": false
+  },
+  {
+    "id": "org-12",
+    "bureauName": "政策企画局",
+    "divisionName": "戦略広報部",
+    "sectionName": "都民の声課 総合相談担当",
+    "actionOwner": "政策企画局 都民の声課",
+    "jurisdictionScope": "他局の所掌に明確に該当しない案件、複数局にまたがる案件の総合調整、分類不能案件の手動トリアージ",
+    "keywords": [],
+    "categoryHint": null,
+    "headOffice": true
+  }
+]

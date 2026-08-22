@@ -1,0 +1,12 @@
+[
+  { "localGovCode": "131016", "localGovName": "千代田区", "contactUrl": "https://www.city.chiyoda.lg.jp/", "consultationDesk": "千代田区 広聴広報課" },
+  { "localGovCode": "131024", "localGovName": "中央区", "contactUrl": "https://www.city.chuo.lg.jp/", "consultationDesk": "中央区 広報課広聴係" },
+  { "localGovCode": "131199", "localGovName": "新宿区", "contactUrl": "https://www.city.shinjuku.lg.jp/", "consultationDesk": "新宿区 広聴相談課" },
+  { "localGovCode": "131113", "localGovName": "台東区", "contactUrl": "https://www.city.taito.lg.jp/", "consultationDesk": "台東区 広聴広報課" },
+  { "localGovCode": "131121", "localGovName": "墨田区", "contactUrl": "https://www.city.sumida.lg.jp/", "consultationDesk": "墨田区 広報広聴課" },
+  { "localGovCode": "131130", "localGovName": "江東区", "contactUrl": "https://www.city.koto.lg.jp/", "consultationDesk": "江東区 広聴広報課" },
+  { "localGovCode": "131155", "localGovName": "渋谷区", "contactUrl": "https://www.city.shibuya.tokyo.jp/", "consultationDesk": "渋谷区 広報コミュニケーション課" },
+  { "localGovCode": "131317", "localGovName": "杉並区", "contactUrl": "https://www.city.suginami.tokyo.jp/", "consultationDesk": "杉並区 広聴係" },
+  { "localGovCode": "131333", "localGovName": "世田谷区", "contactUrl": "https://www.city.setagaya.lg.jp/", "consultationDesk": "世田谷区 広報広聴課" },
+  { "localGovCode": "132012", "localGovName": "八王子市", "contactUrl": "https://www.city.hachioji.tokyo.jp/", "consultationDesk": "八王子市 広報課市民相談室" }
+]

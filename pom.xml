@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.tominnokoe</groupId>
+  <artifactId>tominnokoe-sougou-madoguti</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>都民の声 次世代ハイブリッド仕分け・公表プラットフォーム（プロトタイプ）</name>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <tomcat.version>10.1.34</tomcat.version>
+    <jackson.version>2.18.2</jackson.version>
+    <poi.version>5.3.0</poi.version>
+    <exec.mainClass>com.tominnokoe.Main</exec.mainClass>
+  </properties>
+
+  <dependencies>
+    <!-- Embedded Tomcat: servlet container + JSP engine -->
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-core</artifactId>
+      <version>${tomcat.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
+      <version>${tomcat.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-el</artifactId>
+      <version>${tomcat.version}</version>
+    </dependency>
+
+    <!-- JSTL for JSP (c:forEach, c:if, c:out, fmt:...) -->
+    <dependency>
+      <groupId>jakarta.servlet.jsp.jstl</groupId>
+      <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.web</groupId>
+      <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+
+    <!-- JSON (dataset loading, case persistence, AJAX responses) -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <!-- Excel export (pure Java, no native deps) -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>${poi.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>tominnokoe</finalName>
+    <plugins>
+      <!--
+        JSTL（jakarta.tags.core等）のTLDは組み込みTomcatのJARスキャナが
+        WEB-INF/lib を対象に探す。mvn exec:java 実行時はMaven依存関係がJVMの
+        実行クラスパス上にはあってもWEB-INF/lib には無いため、TLD解決に失敗しうる。
+        これを避けるため、実行時依存JARをビルド時にWEB-INF/libへ複製する
+        （tomcat-embed-* 自体はサーブレットAPIの二重ロード事故を防ぐため除外し、
+        親クラスローダ経由でのみ読み込ませる）。
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.8.1</version>
+        <executions>
+          <execution>
+            <id>copy-webapp-libs</id>
+            <phase>generate-resources</phase>
+            <goals><goal>copy-dependencies</goal></goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/lib</outputDirectory>
+              <includeScope>runtime</includeScope>
+              <!--
+                jakarta.servlet-api / jakarta.el-api は tomcat-embed-* に同梱されたものと
+                クラス実体を一致させる必要があるため複製しない（複製するとWebappClassLoaderが
+                別インスタンスをロードしてしまい ClassCastException の原因になる）。
+                親クラスローダ（mvn exec:java の実行クラスローダ）経由で解決させる。
+              -->
+              <excludeGroupIds>org.apache.tomcat.embed,jakarta.servlet,jakarta.el</excludeGroupIds>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.5.0</version>
+        <configuration>
+          <mainClass>com.tominnokoe.Main</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals><goal>shade</goal></goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>com.tominnokoe.Main</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

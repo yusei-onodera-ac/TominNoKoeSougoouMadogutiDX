@@ -1,0 +1,10 @@
+[
+  { "id": "fac-01", "facilityName": "代々木公園", "facilityType": "都立公園", "managingBureau": "建設局", "address": "渋谷区代々木神園町" },
+  { "id": "fac-02", "facilityName": "日比谷公園", "facilityType": "都立公園", "managingBureau": "建設局", "address": "千代田区日比谷公園" },
+  { "id": "fac-03", "facilityName": "上野恩賜公園", "facilityType": "都立公園", "managingBureau": "建設局", "address": "台東区上野公園" },
+  { "id": "fac-04", "facilityName": "戸山公園", "facilityType": "都立公園", "managingBureau": "建設局", "address": "新宿区戸山" },
+  { "id": "fac-05", "facilityName": "東京都庁舎", "facilityType": "庁舎", "managingBureau": "財務局", "address": "新宿区西新宿二丁目" },
+  { "id": "fac-06", "facilityName": "東京都現代美術館", "facilityType": "文化施設", "managingBureau": "生活文化スポーツ局", "address": "江東区三好" },
+  { "id": "fac-07", "facilityName": "東京都立産業貿易センター", "facilityType": "産業振興施設", "managingBureau": "産業労働局", "address": "港区海岸" },
+  { "id": "fac-08", "facilityName": "駒沢オリンピック公園", "facilityType": "都立公園", "managingBureau": "建設局", "address": "世田谷区駒沢公園" }
+]

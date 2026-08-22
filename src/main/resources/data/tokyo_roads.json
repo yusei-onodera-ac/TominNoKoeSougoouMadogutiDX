@@ -1,0 +1,10 @@
+[
+  { "id": "road-01", "routeName": "環八通り", "routeNumber": "都道311号環状八号線", "managingOffice": "建設局 第一建設事務所" },
+  { "id": "road-02", "routeName": "青梅街道", "routeNumber": "都道4号新宿青梅線", "managingOffice": "建設局 第四建設事務所" },
+  { "id": "road-03", "routeName": "駒沢通り", "routeNumber": "都道420号鮫洲大山線", "managingOffice": "建設局 第二建設事務所" },
+  { "id": "road-04", "routeName": "明治通り", "routeNumber": "都道305号新宿両国線", "managingOffice": "建設局 第五建設事務所" },
+  { "id": "road-05", "routeName": "目白通り", "routeNumber": "都道8号千代田練馬田無線", "managingOffice": "建設局 第四建設事務所" },
+  { "id": "road-06", "routeName": "世田谷通り", "routeNumber": "都道3号世田谷町田線", "managingOffice": "建設局 第二建設事務所" },
+  { "id": "road-07", "routeName": "井の頭通り", "routeNumber": "都道413号荻窪停車場千川線", "managingOffice": "建設局 第三建設事務所" },
+  { "id": "road-08", "routeName": "目黒通り", "routeNumber": "都道312号白金台町等々力線", "managingOffice": "建設局 第二建設事務所" }
+]

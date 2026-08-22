@@ -1,0 +1,182 @@
+[
+  {
+    "id": "case-01",
+    "category": "道路・交通",
+    "subject": "駅前の街路樹の剪定について",
+    "body": "駅東口付近の街路樹が伸びすぎて見通しが悪くなっています。剪定をお願いします。",
+    "handledBureau": "建設局",
+    "handledDivision": "道路管理部",
+    "responseSummary": "現地確認の上、街路樹の剪定作業を実施しました。",
+    "keywords": ["街路樹", "剪定", "道路", "見通し"]
+  },
+  {
+    "id": "case-02",
+    "category": "道路・交通",
+    "subject": "都道の陥没について",
+    "body": "環八通りの歩道に大きな陥没があり危険です。至急補修してください。",
+    "handledBureau": "建設局",
+    "handledDivision": "道路管理部",
+    "responseSummary": "現地調査の上、舗装補修工事を実施しました。",
+    "keywords": ["陥没", "都道", "環八", "舗装", "歩道"]
+  },
+  {
+    "id": "case-03",
+    "category": "道路・交通",
+    "subject": "駅周辺の放置自転車について",
+    "body": "駅前に放置自転車が多く、歩行の妨げになっています。撤去をお願いします。",
+    "handledBureau": "建設局",
+    "handledDivision": "道路管理部",
+    "responseSummary": "放置自転車の撤去指導及び駐輪場整備の検討を行いました。",
+    "keywords": ["放置自転車", "違法駐輪", "駐輪場"]
+  },
+  {
+    "id": "case-04",
+    "category": "交通",
+    "subject": "都営バスの増便要望",
+    "body": "朝のラッシュ時に都営バスが満員で乗れないことが多く、増便をお願いしたい。",
+    "handledBureau": "交通局",
+    "handledDivision": "自動車部",
+    "responseSummary": "利用状況を調査の上、朝の時間帯の運行本数を見直しました。",
+    "keywords": ["都営バス", "増便", "バス", "満員"]
+  },
+  {
+    "id": "case-05",
+    "category": "環境・みどり",
+    "subject": "都立公園の遊具の破損",
+    "body": "代々木公園の遊具が壊れていて危険です。修理してほしいです。",
+    "handledBureau": "建設局",
+    "handledDivision": "公園緑地部",
+    "responseSummary": "現地確認の上、遊具の修繕を実施しました。",
+    "keywords": ["都立公園", "代々木公園", "遊具", "公園"]
+  },
+  {
+    "id": "case-06",
+    "category": "環境・みどり",
+    "subject": "都内の緑を増やしてほしい",
+    "body": "都内にもっと緑を増やしてほしいです。街路樹を増やすなど検討してください。",
+    "handledBureau": "政策企画局",
+    "handledDivision": "戦略広報部",
+    "responseSummary": "関係局（建設局・環境局・都市整備局）へ意見を共有し、緑化施策の参考としました。",
+    "keywords": ["緑", "みどり", "環境", "都内"]
+  },
+  {
+    "id": "case-07",
+    "category": "環境",
+    "subject": "近隣工事の騒音について",
+    "body": "近所の工事現場の騒音がひどく、夜間まで続いています。指導してほしい。",
+    "handledBureau": "環境局",
+    "handledDivision": "環境改善部",
+    "responseSummary": "事業者へ騒音規制基準の遵守を指導しました。",
+    "keywords": ["騒音", "工事", "夜間", "公害"]
+  },
+  {
+    "id": "case-08",
+    "category": "福祉",
+    "subject": "特別養護老人ホームの入所待ちについて",
+    "body": "親を特別養護老人ホームに申し込んでいるが、待機期間が長く不安です。",
+    "handledBureau": "福祉局",
+    "handledDivision": "高齢社会対策部",
+    "responseSummary": "施設整備計画の状況を説明し、相談窓口を案内しました。",
+    "keywords": ["介護", "高齢者", "特別養護老人ホーム", "福祉施設"]
+  },
+  {
+    "id": "case-09",
+    "category": "上下水道",
+    "subject": "水道水の濁りについて",
+    "body": "自宅の水道水が濁ることがあります。原因を調査してほしい。",
+    "handledBureau": "水道局",
+    "handledDivision": "給水部",
+    "responseSummary": "配水管の状況を調査し、フラッシングを実施しました。",
+    "keywords": ["水道", "濁り水", "水質"]
+  },
+  {
+    "id": "case-10",
+    "category": "上下水道",
+    "subject": "マンホールからの悪臭について",
+    "body": "自宅前のマンホールから悪臭がします。改善してほしいです。",
+    "handledBureau": "下水道局",
+    "handledDivision": "施設管理部",
+    "responseSummary": "現地調査の上、清掃及び臭気対策を実施しました。",
+    "keywords": ["下水", "悪臭", "マンホール"]
+  },
+  {
+    "id": "case-11",
+    "category": "都市整備",
+    "subject": "近隣マンション建設に伴う日照被害",
+    "body": "近くに建設中のマンションで日照が遮られそうです。相談したいです。",
+    "handledBureau": "都市整備局",
+    "handledDivision": "市街地建築部",
+    "responseSummary": "建築主との協議の場を設定し、紛争調整手続きを案内しました。",
+    "keywords": ["日照", "マンション紛争", "建築確認"]
+  },
+  {
+    "id": "case-12",
+    "category": "教育",
+    "subject": "都立高校の校則について",
+    "body": "子どもが通う都立高校の校則が厳しすぎると感じています。見直しを検討してほしい。",
+    "handledBureau": "教育庁",
+    "handledDivision": "都立学校教育部",
+    "responseSummary": "各校の校則見直しの取組状況を説明しました。",
+    "keywords": ["都立高校", "校則", "教育"]
+  },
+  {
+    "id": "case-13",
+    "category": "河川・水害",
+    "subject": "河川の護岸の劣化について",
+    "body": "近所の河川の護岸が劣化しているように見えます。点検してほしい。",
+    "handledBureau": "建設局",
+    "handledDivision": "河川部",
+    "responseSummary": "護岸の点検を実施し、必要な補修を行いました。",
+    "keywords": ["河川", "護岸", "治水"]
+  },
+  {
+    "id": "case-14",
+    "category": "区市町村管轄",
+    "subject": "近所の区立公園のブランコが破損している",
+    "body": "近所の〇〇区立公園のブランコが壊れていて子どもが使えません。直してほしいです。",
+    "handledBureau": "（都管轄外：区が対応）",
+    "handledDivision": "-",
+    "responseSummary": "都の管轄外のため、当該区の公園担当課への案内文を送付しました。",
+    "keywords": ["区立公園", "ブランコ", "公園", "破損"]
+  },
+  {
+    "id": "case-15",
+    "category": "区市町村管轄",
+    "subject": "区道の街灯が切れている",
+    "body": "自宅前の区道の街灯が切れていて夜間暗く危険です。直してほしい。",
+    "handledBureau": "（都管轄外：区が対応）",
+    "handledDivision": "-",
+    "responseSummary": "都道ではなく区道のため、当該区の道路管理課への案内文を送付しました。",
+    "keywords": ["区道", "街灯", "夜間", "危険"]
+  },
+  {
+    "id": "case-16",
+    "category": "複合案件",
+    "subject": "駅前の違法駐輪対策と都営バスの増便要望",
+    "body": "駅前の違法駐輪がひどく、また都営バスの本数も少なくて困っています。両方改善してほしいです。",
+    "handledBureau": "建設局・交通局",
+    "handledDivision": "-",
+    "responseSummary": "建設局（駐輪対策）と交通局（バス運行）が連携して対応し、政策企画局が進捗を総括しました。",
+    "keywords": ["違法駐輪", "都営バス", "増便", "駅前"]
+  },
+  {
+    "id": "case-17",
+    "category": "曖昧・要望",
+    "subject": "もっと住みやすい東京にしてほしい",
+    "body": "全体的にもっと住みやすい東京にしてほしいです。具体的にどこがという訳ではないのですが。",
+    "handledBureau": "政策企画局",
+    "handledDivision": "戦略広報部",
+    "responseSummary": "総合的な要望として受理し、関係局全体で参考にする形で処理しました。",
+    "keywords": ["住みやすい", "要望", "全般"]
+  },
+  {
+    "id": "case-18",
+    "category": "曖昧・要望",
+    "subject": "行政サービス全般について",
+    "body": "行政サービス全般について、もっと分かりやすくしてほしいと思います。",
+    "handledBureau": "政策企画局",
+    "handledDivision": "戦略広報部",
+    "responseSummary": "総合窓口にて内容を精査し、関連する情報発信施策の参考としました。",
+    "keywords": ["行政サービス", "分かりやすさ"]
+  }
+]
