@@ -266,3 +266,16 @@ details.advanced-section .advanced-body {
   color: var(--muted);
   margin: 14px 0 0;
 }
+
+/* --- 案件一覧テーブル: 1案件=2行(概要+詳細)のペアを視覚的に区切る --- */
+table tbody tr:nth-of-type(4n+3),
+table tbody tr:nth-of-type(4n+4) {
+  background: #f5f7fa;
+}
+table tbody tr:nth-of-type(2n) td {
+  border-bottom: 3px solid var(--border);
+  padding-bottom: 14px;
+}
+table tbody tr:nth-of-type(2n-1) td {
+  padding-top: 12px;
+}

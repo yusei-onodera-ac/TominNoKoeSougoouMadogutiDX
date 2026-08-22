@@ -60,6 +60,7 @@ public class AdminTriageServlet extends HttpServlet {
         request.setAttribute("cases", filtered);
         request.setAttribute("classificationFilter", classificationFilter);
         request.setAttribute("bureauFilter", bureauFilter);
+        request.setAttribute("error", request.getParameter("error"));
         request.setAttribute("isGeneralDesk", isGeneralDesk);
         request.setAttribute("sessionBureau", sessionBureau);
         // admin-portalとcitizen-portalは別アプリ・別ポートで動作するため、都民向け確認画面への
@@ -94,8 +95,12 @@ public class AdminTriageServlet extends HttpServlet {
         String responseText = request.getParameter("responseText");
 
         Optional<CaseEntity> found = CaseRepository.getInstance().findById(caseId);
-        if (found.isEmpty() || responseText == null || responseText.isBlank()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "不正なリクエストです。");
+        if (found.isEmpty()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "対象の案件が見つかりません。");
+            return;
+        }
+        if (responseText == null || responseText.isBlank()) {
+            redirectWithError(request, response, "回答文を入力してください。");
             return;
         }
         CaseEntity entity = found.get();
@@ -126,8 +131,12 @@ public class AdminTriageServlet extends HttpServlet {
         String bureau = request.getParameter("bureau");
 
         Optional<CaseEntity> found = CaseRepository.getInstance().findById(caseId);
-        if (found.isEmpty() || bureau == null || bureau.isBlank()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "不正なリクエストです。");
+        if (found.isEmpty()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "対象の案件が見つかりません。");
+            return;
+        }
+        if (bureau == null || bureau.isBlank()) {
+            redirectWithError(request, response, "アサイン先の担当局名を入力してください。");
             return;
         }
         CaseEntity entity = found.get();
@@ -138,5 +147,12 @@ public class AdminTriageServlet extends HttpServlet {
         AuditLog.getInstance().record(actor, "ASSIGN", caseId, "担当局を手動アサイン: " + bureau);
 
         response.sendRedirect(request.getContextPath() + "/admin/triage");
+    }
+
+    /** バリデーションエラーをTomcatの生エラー画面ではなく、一覧画面上部のエラー表示として見せる。 */
+    private void redirectWithError(HttpServletRequest request, HttpServletResponse response, String message)
+            throws IOException {
+        String encoded = java.net.URLEncoder.encode(message, java.nio.charset.StandardCharsets.UTF_8);
+        response.sendRedirect(request.getContextPath() + "/admin/triage?error=" + encoded);
     }
 }

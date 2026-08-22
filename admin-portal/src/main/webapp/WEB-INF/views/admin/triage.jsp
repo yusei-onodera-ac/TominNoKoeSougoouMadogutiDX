@@ -15,6 +15,9 @@
 <%@ include file="/WEB-INF/views/common/adminNav.jspf" %>
 <main id="main-content">
   <div class="card">
+    <c:if test="${not empty error}">
+      <div class="error-box"><c:out value="${error}"/></div>
+    </c:if>
     <c:choose>
       <c:when test="${isGeneralDesk}">
         <h1>総合窓口トリアージダッシュボード</h1>
@@ -117,7 +120,7 @@
                   <input type="hidden" name="action" value="respond">
                   <input type="hidden" name="caseId" value="${c.id}">
                   <label for="responseText-${c.id}">回答文（都民への回答・対応内容）</label>
-                  <textarea id="responseText-${c.id}" name="responseText" style="min-height:60px;" placeholder="現地確認の上、対応いたしました。等"></textarea>
+                  <textarea id="responseText-${c.id}" name="responseText" required style="min-height:60px;" placeholder="現地確認の上、対応いたしました。等"></textarea>
                   <button type="submit" class="small secondary">回答を送信</button>
                 </form>
               </c:otherwise>
