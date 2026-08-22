@@ -29,6 +29,12 @@ public class Main {
         // 依存関係（tomcat-embed-jasper等）を含まないシステムクラスローダに落ちてしまうことがある。
         // Main自身を読み込んだクラスローダ（依存関係を正しく含む）を明示的に親として指定する。
         ctx.setParentClassLoader(Main.class.getClassLoader());
+        // citizen-portal(8080)とadmin-portal(8081)は同じホスト名(localhost)の別ポートで動く別アプリのため、
+        // 既定のセッションCookie名（JSESSIONID）のままだとブラウザ側でCookieが衝突し
+        // （Cookieはポートではなくホストでスコープされるためlocalhost上の全ポートで共有されてしまう）、
+        // 片方にアクセスするともう片方のセッションが上書きされてCSRFトークン不一致等の原因になる。
+        // アプリごとに異なるセッションCookie名を明示的に設定して衝突を避ける。
+        ctx.setSessionCookieName("CITIZEN_SESSIONID");
         ServletRegistrar.registerAll(tomcat, ctx);
         SeedData.seedIfEmpty(); // DBが空の場合のみデモ用ケースを投入（初回起動でも管理画面が空にならないように）
 

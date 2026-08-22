@@ -26,6 +26,11 @@ public class Main {
 
         Context ctx = tomcat.addWebapp("", new File(webappDirLocation).getAbsolutePath());
         ctx.setParentClassLoader(Main.class.getClassLoader());
+        // citizen-portal(8080)とadmin-portal(8081)は同じホスト名(localhost)の別ポートで動く別アプリのため、
+        // 既定のセッションCookie名（JSESSIONID）のままだとブラウザ側でCookieが衝突する
+        // （Cookieはポートではなくホストでスコープされるためlocalhost上の全ポートで共有されてしまう）。
+        // アプリごとに異なるセッションCookie名を明示的に設定して衝突を避ける。
+        ctx.setSessionCookieName("ADMIN_SESSIONID");
         ServletRegistrar.registerAll(tomcat, ctx);
         SeedData.seedIfEmpty(); // DBが空の場合のみデモ用ケースを投入（citizen-portalと独立に起動されても空にならないように）
 
