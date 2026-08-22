@@ -1,5 +1,7 @@
 package com.tominnokoe.classification;
 
+import com.tominnokoe.classification.llm.GeminiClient;
+import com.tominnokoe.classification.llm.LlmClassificationParser;
 import com.tominnokoe.classification.retrieval.RetrievalService;
 import com.tominnokoe.classification.rules.BureauRoutingService;
 import com.tominnokoe.classification.rules.ConfidenceScorer;
@@ -26,12 +28,13 @@ import java.util.List;
 /**
  * 都民の声 高精度ルーティング・トリアージエンジン。
  *
- * <p><b>将来の実LLM差し替えの唯一の接点。</b>
- * 現在はルールベースのモック実装（RAG検索＋決定論的ルール）で動作しているが、
+ * <p><b>ハイブリッド動作: 実LLM（Gemini API）とルールベースのモックを自動切り替え。</b>
+ * 環境変数 {@code GEMINI_API_KEY} が設定されていれば実際にGemini APIを呼び出して判定し、
+ * 未設定の場合や呼び出し失敗時（ネットワークエラー・レート制限・レスポンス解析失敗等）は
+ * RAG検索＋決定論的ルールによるモック判定へ自動フォールバックする。
  * {@link #classify(ClassificationInput, boolean)} のシグネチャと戻り値
- * ({@link ClassificationResult} = 要件定義書1-4CのJSONスキーマそのもの) を変えずに
- * 内部実装だけをLLM API呼び出し（{@link PromptTemplate}参照、Gemini API等を想定）に
- * 置き換えれば、呼び出し側（Servlet群）は一切変更不要。</p>
+ * ({@link ClassificationResult} = 要件定義書1-4CのJSONスキーマそのもの) は両経路で共通のため、
+ * 呼び出し側（Servlet群）はどちらの経路が使われているか意識する必要がない。</p>
  */
 public final class ClassificationEngine {
 
@@ -41,6 +44,7 @@ public final class ClassificationEngine {
     private final BureauRoutingService bureauRoutingService = new BureauRoutingService();
     private final ConfidenceScorer confidenceScorer = new ConfidenceScorer();
     private final GovernanceTreeBuilder governanceTreeBuilder = new GovernanceTreeBuilder();
+    private final GeminiClient geminiClient = new GeminiClient();
 
     /**
      * @param input                    都民の入力（申告ジャンル・件名・本文）
@@ -51,6 +55,8 @@ public final class ClassificationEngine {
     public ClassificationResult classify(ClassificationInput input, boolean skipInappropriateCheck) {
         RetrievedContext context = retrievalService.retrieveContext(input);
 
+        // 誹謗中傷・脅迫等の明白な不適切コンテンツはキーワード事前フィルタで判定する
+        // （実LLM呼び出しのコスト削減・多層防御の観点から、安全チェックはここでは常にローカルで行う）。
         if (!skipInappropriateCheck) {
             InappropriateReason reason = inappropriateDetector.detect(input.combinedText());
             if (reason != InappropriateReason.NONE) {
@@ -58,6 +64,19 @@ public final class ClassificationEngine {
                         true, reason, ClassificationType.UNKNOWN,
                         RoutingInfo.inappropriate(), ExternalGuidance.none(),
                         1.0, evidenceForInappropriate(reason), null);
+            }
+        }
+
+        // GEMINI_API_KEY が設定されていれば実LLMへ委譲し、失敗時はルールベースのモックへ
+        // フォールバックする（呼び出し側のシグネチャ・挙動は変わらない）。
+        if (GeminiClient.isConfigured()) {
+            try {
+                String prompt = PromptTemplate.buildPrompt(input, context);
+                String rawJson = geminiClient.generateJson(prompt);
+                return LlmClassificationParser.parse(rawJson);
+            } catch (Exception e) {
+                System.err.println("[ClassificationEngine] Gemini呼び出しに失敗したため、ルールベースの判定にフォールバックします: "
+                        + e.getMessage());
             }
         }
 

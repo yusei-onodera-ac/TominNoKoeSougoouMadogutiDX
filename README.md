@@ -5,9 +5,13 @@
 - **都民向けポータル（citizen-portal）と行政向け管理画面（admin-portal）は、実際には全く別のシステムとして
   それぞれ独立に動作する**（別ポート・別Tomcatインスタンス・別デプロイ）。共有するのはドメインロジック
   （`common`モジュール）とデータベースのみ。
-- 判定エンジンは現時点では**ルールベースのモック**（実LLM未接続）。UI・全体ロジックの検証を優先し、
-  [`common/src/main/java/com/tominnokoe/classification/ClassificationEngine.java`](common/src/main/java/com/tominnokoe/classification/ClassificationEngine.java)
-  の内部実装だけを差し替えれば、将来Gemini API等の実LLM呼び出しに移行できる構造になっている。
+- 判定エンジンは**Gemini APIとルールベースのモックのハイブリッド**。`GEMINI_API_KEY`環境変数が
+  設定されていれば実際にGemini APIを呼び出して判定し、未設定時や呼び出し失敗時（ネットワークエラー・
+  レスポンス解析失敗等）はルールベースのモックへ自動フォールバックする（
+  [`ClassificationEngine.java`](common/src/main/java/com/tominnokoe/classification/ClassificationEngine.java)）。
+  Gemini経路でも「担当組織名は事務分掌データに実在するものだけを許可し、存在しない場合は機械的にUNKNOWNへ
+  フォールバックする」というハルシネーション防止のポストホック検証を実施する
+  （[`LlmClassificationParser.java`](common/src/main/java/com/tominnokoe/classification/llm/LlmClassificationParser.java)）。
 - 要件定義書のレビュー・改訂版は [`docs/requirements-improved.ja.md`](docs/requirements-improved.ja.md) を参照。
 
 ## プロジェクト構成（Maven複数モジュール）
@@ -55,6 +59,24 @@ admin-portal側の管理画面にすぐ反映される。
 - パスワード: `tominnokoe2026`
 
 （デモ用の単一アカウント。本番では都のSSO/LDAP等への置き換えが前提。詳細は改訂版要件定義書のセキュリティ設計節を参照）
+
+### 実LLM（Gemini API）を使う場合
+
+環境変数 `GEMINI_API_KEY` を設定してから `citizen-portal` を起動すると、投稿された案件の分類に
+実際にGemini APIが使われる（未設定時はルールベースのモックのまま動作する。分類はすべて
+citizen-portal側の`/submit`受付時、および行政側の再分類系操作(不適切復元等)で行われるため、
+`GEMINI_API_KEY`はcitizen-portal・admin-portalの両方に設定するとよい）。
+
+```bash
+export GEMINI_API_KEY="your-api-key-here"
+# 任意: モデルを差し替える場合（既定値 gemini-2.5-flash）
+export GEMINI_MODEL="gemini-2.5-flash"
+
+mvn -pl citizen-portal exec:java
+```
+
+Google側のAPI仕様・モデル名は変更されうるため、呼び出しに失敗した場合は自動的にルールベースの
+モックへフォールバックし、アプリは落ちない（ログに警告が出力される）。
 
 ## デモの見せ方（5つのベンチマークカテゴリ）
 
