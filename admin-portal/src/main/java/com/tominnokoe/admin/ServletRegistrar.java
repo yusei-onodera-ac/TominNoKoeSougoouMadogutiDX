@@ -3,6 +3,7 @@ package com.tominnokoe.admin;
 import com.tominnokoe.admin.web.filter.AdminAuthFilter;
 import com.tominnokoe.admin.web.filter.EncodingFilter;
 import com.tominnokoe.admin.web.filter.GeneralDeskOnlyFilter;
+import com.tominnokoe.admin.web.filter.LgwanSimulationFilter;
 import com.tominnokoe.admin.web.filter.SecurityHeadersFilter;
 import com.tominnokoe.admin.web.servlet.AdminGovernanceServlet;
 import com.tominnokoe.admin.web.servlet.AdminGuidanceServlet;
@@ -38,6 +39,8 @@ final class ServletRegistrar {
     }
 
     private static void registerFilters(Context ctx) {
+        // LGWAN相当のネットワークアクセス制御は最外層（他の全フィルタより前）で行う
+        addFilter(ctx, "lgwanSimulationFilter", new LgwanSimulationFilter(), "/*");
         addFilter(ctx, "encodingFilter", new EncodingFilter(), "/*");
         addFilter(ctx, "securityHeadersFilter", new SecurityHeadersFilter(), "/*");
         addFilter(ctx, "adminAuthFilter", new AdminAuthFilter(), "/admin/*");
