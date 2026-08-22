@@ -11,21 +11,27 @@
 <header class="site-header">
   <p class="site-title">都民の声 次世代ハイブリッド仕分けプラットフォーム（管理画面）</p>
 </header>
-<main style="max-width: 420px;">
+<main style="max-width: 460px;">
   <div class="card">
     <h1>職員ログイン</h1>
+    <p class="hint">所属局を選択してログインしてください。「政策企画局」は都民の声総合窓口として全案件を横断的に確認できます。</p>
     <c:if test="${not empty error}">
       <div class="error-box"><c:out value="${error}"/></div>
     </c:if>
     <form method="post" action="${pageContext.request.contextPath}/admin/login">
       <input type="hidden" name="csrfToken" value="${csrfToken}">
-      <label for="username">ユーザー名</label>
-      <input type="text" id="username" name="username" autocomplete="username" required>
+      <label for="bureau">所属局</label>
+      <select id="bureau" name="bureau" required autofocus>
+        <option value="">選択してください</option>
+        <c:forEach var="b" items="${bureauNames}">
+          <option value="${b}"><c:out value="${b}"/></option>
+        </c:forEach>
+      </select>
       <label for="password">パスワード</label>
       <input type="password" id="password" name="password" autocomplete="current-password" required>
       <button type="submit">ログイン</button>
     </form>
-    <p class="hint">デモ用アカウント: admin / tominnokoe2026（README参照）</p>
+    <p class="hint">デモ用共通パスワード: tominnokoe2026（README参照。本番では局・職員ごとの認証基盤への置き換えが前提）</p>
   </div>
 </main>
 </body>

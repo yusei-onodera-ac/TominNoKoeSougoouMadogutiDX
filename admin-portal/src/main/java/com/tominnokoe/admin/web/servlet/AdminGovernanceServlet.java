@@ -7,6 +7,7 @@ import com.tominnokoe.model.entity.CaseEntity;
 import com.tominnokoe.model.enums.NotificationStatus;
 import com.tominnokoe.notification.NotificationDispatcher;
 import com.tominnokoe.notification.NotificationMessage;
+import com.tominnokoe.admin.security.BureauScope;
 import com.tominnokoe.admin.security.CsrfTokenManager;
 import com.tominnokoe.admin.web.filter.AdminAuthFilter;
 
@@ -30,9 +31,11 @@ public class AdminGovernanceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String sessionBureau = (String) request.getSession().getAttribute(AdminAuthFilter.SESSION_KEY);
+
         List<CaseEntity> cases = new ArrayList<>();
         for (CaseEntity c : CaseRepository.getInstance().findAll()) {
-            if (c.getClassification() != null && !c.getClassification().isInappropriate()
+            if (c.getClassification() != null && BureauScope.isVisible(c, sessionBureau)
                     && !c.getClassification().getRouting().getGovernanceNotificationTree().isEmpty()) {
                 cases.add(c);
             }
@@ -52,18 +55,23 @@ public class AdminGovernanceServlet extends HttpServlet {
         String caseId = request.getParameter("caseId");
         String departmentName = request.getParameter("departmentName");
 
+        String actor = (String) request.getSession().getAttribute(AdminAuthFilter.SESSION_KEY);
+
         Optional<CaseEntity> found = CaseRepository.getInstance().findById(caseId);
         if (found.isEmpty() || departmentName == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "不正なリクエストです。");
             return;
         }
         CaseEntity entity = found.get();
+        if (!BureauScope.isVisible(entity, actor)) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "この案件への操作権限がありません。");
+            return;
+        }
         NotificationStatus current = entity.getNotificationStatuses().getOrDefault(departmentName, NotificationStatus.PENDING);
         NotificationStatus next = nextStatus(current);
         entity.getNotificationStatuses().put(departmentName, next);
         CaseRepository.getInstance().update(entity);
 
-        String actor = (String) request.getSession().getAttribute(AdminAuthFilter.SESSION_KEY);
         String logDetails = departmentName + " のステータスを " + current + " → " + next + " に変更";
 
         // NOTIFIED へ遷移した場合、実際に通知配信（メール/Slack）を試みる

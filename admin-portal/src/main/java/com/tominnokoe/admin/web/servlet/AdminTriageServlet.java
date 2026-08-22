@@ -4,6 +4,8 @@ import com.tominnokoe.dao.AuditLog;
 import com.tominnokoe.dao.CaseRepository;
 import com.tominnokoe.model.entity.CaseEntity;
 import com.tominnokoe.model.enums.CaseStatus;
+import com.tominnokoe.security.BureauAccountRegistry;
+import com.tominnokoe.admin.security.BureauScope;
 import com.tominnokoe.admin.security.CsrfTokenManager;
 import com.tominnokoe.admin.web.filter.AdminAuthFilter;
 
@@ -13,12 +15,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * 総合窓口トリアージダッシュボード（F-A01）。政策企画局向け。
+ * 局トリアージダッシュボード（F-A01）。
+ * 政策企画局（総合窓口）は全案件を横断的に閲覧・手動アサインできる。
+ * それ以外の局アカウントは自局が主担当（または関連局）の案件のみを閲覧でき、
+ * 回答文の入力・送信ができる（既存の行政の回答フローに相当、F-A03の一部）。
  * 不適切フラグの立った案件はここには表示しない（F-A02の隔離監査ビューへ分離）。
  */
 public class AdminTriageServlet extends HttpServlet {
@@ -26,13 +32,16 @@ public class AdminTriageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String sessionBureau = (String) request.getSession().getAttribute(AdminAuthFilter.SESSION_KEY);
+        boolean isGeneralDesk = BureauAccountRegistry.isGeneralDesk(sessionBureau);
+
         String classificationFilter = request.getParameter("classification");
-        String bureauFilter = request.getParameter("bureau");
+        String bureauFilter = isGeneralDesk ? request.getParameter("bureau") : null;
 
         List<CaseEntity> all = CaseRepository.getInstance().findAll();
         List<CaseEntity> filtered = new ArrayList<>();
         for (CaseEntity c : all) {
-            if (c.getClassification() == null || c.getClassification().isInappropriate()) {
+            if (c.getClassification() == null || !BureauScope.isVisible(c, sessionBureau)) {
                 continue;
             }
             if (classificationFilter != null && !classificationFilter.isBlank()
@@ -51,6 +60,8 @@ public class AdminTriageServlet extends HttpServlet {
         request.setAttribute("cases", filtered);
         request.setAttribute("classificationFilter", classificationFilter);
         request.setAttribute("bureauFilter", bureauFilter);
+        request.setAttribute("isGeneralDesk", isGeneralDesk);
+        request.setAttribute("sessionBureau", sessionBureau);
         request.setAttribute("csrfToken", CsrfTokenManager.getOrCreateToken(request));
         request.getRequestDispatcher("/WEB-INF/views/admin/triage.jsp").forward(request, response);
     }
@@ -60,6 +71,51 @@ public class AdminTriageServlet extends HttpServlet {
             throws ServletException, IOException {
         if (!CsrfTokenManager.verify(request)) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "不正なリクエストです（CSRFトークン不一致）。");
+            return;
+        }
+        String actor = (String) request.getSession().getAttribute(AdminAuthFilter.SESSION_KEY);
+        String action = request.getParameter("action");
+
+        if ("respond".equals(action)) {
+            handleRespond(request, response, actor);
+        } else {
+            handleAssign(request, response, actor);
+        }
+    }
+
+    /** 回答文の入力・送信（既存の行政の回答フローに相当）。案件が閲覧可能な局のみ実行できる。 */
+    private void handleRespond(HttpServletRequest request, HttpServletResponse response, String actor)
+            throws IOException {
+        String caseId = request.getParameter("caseId");
+        String responseText = request.getParameter("responseText");
+
+        Optional<CaseEntity> found = CaseRepository.getInstance().findById(caseId);
+        if (found.isEmpty() || responseText == null || responseText.isBlank()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "不正なリクエストです。");
+            return;
+        }
+        CaseEntity entity = found.get();
+        if (!BureauScope.isVisible(entity, actor)) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "この案件への回答権限がありません。");
+            return;
+        }
+
+        entity.setResponseText(responseText);
+        entity.setRespondedBy(actor);
+        entity.setRespondedAt(Instant.now());
+        entity.setStatus(CaseStatus.RESOLVED);
+        CaseRepository.getInstance().update(entity);
+
+        AuditLog.getInstance().record(actor, "RESPONSE_SUBMITTED", caseId, "回答文を送信しました");
+
+        response.sendRedirect(request.getContextPath() + "/admin/triage");
+    }
+
+    /** 担当局の手動アサイン（政策企画局＝総合窓口専用、主にUNKNOWN案件のトリアージ用）。 */
+    private void handleAssign(HttpServletRequest request, HttpServletResponse response, String actor)
+            throws IOException {
+        if (!BureauAccountRegistry.isGeneralDesk(actor)) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "担当局の手動アサインは政策企画局（総合窓口）のみ実行できます。");
             return;
         }
         String caseId = request.getParameter("caseId");
@@ -75,7 +131,6 @@ public class AdminTriageServlet extends HttpServlet {
         entity.setStatus(CaseStatus.ASSIGNED);
         CaseRepository.getInstance().update(entity);
 
-        String actor = (String) request.getSession().getAttribute(AdminAuthFilter.SESSION_KEY);
         AuditLog.getInstance().record(actor, "ASSIGN", caseId, "担当局を手動アサイン: " + bureau);
 
         response.sendRedirect(request.getContextPath() + "/admin/triage");

@@ -7,15 +7,23 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>総合窓口トリアージ - 都民の声プラットフォーム管理画面</title>
+  <title>トリアージ・案件一覧 - 都民の声プラットフォーム管理画面</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/adminNav.jspf" %>
 <main>
   <div class="card">
-    <h1>総合窓口トリアージダッシュボード</h1>
-    <p class="hint">政策企画局向け。不適切フラグの立った案件はここには表示されません（<a href="${pageContext.request.contextPath}/admin/inappropriate">不適切監査ビュー</a>を参照）。</p>
+    <c:choose>
+      <c:when test="${isGeneralDesk}">
+        <h1>総合窓口トリアージダッシュボード</h1>
+        <p class="hint">政策企画局（都民の声総合窓口）向け。全局の案件を横断的に確認できます。不適切フラグの立った案件はここには表示されません（<a href="${pageContext.request.contextPath}/admin/inappropriate">不適切監査ビュー</a>を参照）。</p>
+      </c:when>
+      <c:otherwise>
+        <h1><c:out value="${sessionBureau}"/> の案件一覧</h1>
+        <p class="hint">自局が担当（または関連局）の案件のみ表示されます。案件へ回答文を入力・送信できます。</p>
+      </c:otherwise>
+    </c:choose>
 
     <form method="get" action="${pageContext.request.contextPath}/admin/triage" style="display:flex; gap:12px; align-items:end; margin-bottom: 16px;">
       <div style="flex:1;">
@@ -27,10 +35,12 @@
           <option value="UNKNOWN" ${classificationFilter == 'UNKNOWN' ? 'selected' : ''}>UNKNOWN</option>
         </select>
       </div>
-      <div style="flex:1;">
-        <label for="bureau">担当局で絞り込み</label>
-        <input type="text" id="bureau" name="bureau" value="${fn:escapeXml(bureauFilter)}" placeholder="例: 建設局">
-      </div>
+      <c:if test="${isGeneralDesk}">
+        <div style="flex:1;">
+          <label for="bureau">担当局で絞り込み</label>
+          <input type="text" id="bureau" name="bureau" value="${fn:escapeXml(bureauFilter)}" placeholder="例: 建設局">
+        </div>
+      </c:if>
       <div><button type="submit">絞り込む</button></div>
     </form>
 
@@ -38,7 +48,8 @@
       <thead>
       <tr>
         <th>受付番号</th><th>受付日時</th><th>件名</th><th>分類</th><th>confidence</th>
-        <th>担当局</th><th>ステータス</th><th>手動アサイン</th>
+        <th>担当局</th><th>ステータス</th>
+        <c:if test="${isGeneralDesk}"><th>手動アサイン</th></c:if>
       </tr>
       </thead>
       <tbody>
@@ -61,13 +72,36 @@
           </td>
           <td><c:out value="${not empty c.assignedBureauOverride ? c.assignedBureauOverride : c.classification.routing.primaryBureau}"/></td>
           <td><c:out value="${c.status}"/></td>
-          <td>
-            <form method="post" action="${pageContext.request.contextPath}/admin/triage" style="display:flex; gap:4px;">
-              <input type="hidden" name="csrfToken" value="${csrfToken}">
-              <input type="hidden" name="caseId" value="${c.id}">
-              <input type="text" name="bureau" placeholder="担当局名" style="margin:0; padding:4px 6px; font-size:12px; width:110px;">
-              <button type="submit" class="small">アサイン</button>
-            </form>
+          <c:if test="${isGeneralDesk}">
+            <td>
+              <form method="post" action="${pageContext.request.contextPath}/admin/triage" style="display:flex; gap:4px;">
+                <input type="hidden" name="csrfToken" value="${csrfToken}">
+                <input type="hidden" name="action" value="assign">
+                <input type="hidden" name="caseId" value="${c.id}">
+                <input type="text" name="bureau" placeholder="担当局名" style="margin:0; padding:4px 6px; font-size:12px; width:110px;">
+                <button type="submit" class="small">アサイン</button>
+              </form>
+            </td>
+          </c:if>
+        </tr>
+        <tr>
+          <td colspan="${isGeneralDesk ? 8 : 7}" style="background:#fafbfc;">
+            <c:choose>
+              <c:when test="${not empty c.responseText}">
+                <div class="hint">回答済み（<c:out value="${c.respondedBy}"/> / <c:out value="${c.respondedAt}"/>）</div>
+                <p style="white-space: pre-wrap;"><c:out value="${c.responseText}"/></p>
+              </c:when>
+              <c:otherwise>
+                <form method="post" action="${pageContext.request.contextPath}/admin/triage">
+                  <input type="hidden" name="csrfToken" value="${csrfToken}">
+                  <input type="hidden" name="action" value="respond">
+                  <input type="hidden" name="caseId" value="${c.id}">
+                  <label for="responseText-${c.id}">回答文（都民への回答・対応内容）</label>
+                  <textarea id="responseText-${c.id}" name="responseText" style="min-height:60px;" placeholder="現地確認の上、対応いたしました。等"></textarea>
+                  <button type="submit" class="small secondary">回答を送信</button>
+                </form>
+              </c:otherwise>
+            </c:choose>
           </td>
         </tr>
       </c:forEach>

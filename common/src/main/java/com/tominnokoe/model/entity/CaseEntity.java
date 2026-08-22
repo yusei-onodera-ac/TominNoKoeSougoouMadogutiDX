@@ -34,6 +34,12 @@ public class CaseEntity {
     /** 案内文（external_guidance.explanation_text）の再生成・編集後の内容。未編集ならnull。 */
     private String guidanceTextOverride;
 
+    /** 担当局職員が入力した回答文（既存の行政の回答フローに相当）。未回答ならnull。 */
+    private String responseText;
+    /** 回答を入力した局（セッションの局名）。 */
+    private String respondedBy;
+    private Instant respondedAt;
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -63,4 +69,13 @@ public class CaseEntity {
 
     public String getGuidanceTextOverride() { return guidanceTextOverride; }
     public void setGuidanceTextOverride(String guidanceTextOverride) { this.guidanceTextOverride = guidanceTextOverride; }
+
+    public String getResponseText() { return responseText; }
+    public void setResponseText(String responseText) { this.responseText = responseText; }
+
+    public String getRespondedBy() { return respondedBy; }
+    public void setRespondedBy(String respondedBy) { this.respondedBy = respondedBy; }
+
+    public Instant getRespondedAt() { return respondedAt; }
+    public void setRespondedAt(Instant respondedAt) { this.respondedAt = respondedAt; }
 }
