@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <title>都民の声総合窓口メールフォーム - 都民の声プラットフォーム</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
+  <script defer src="${pageContext.request.contextPath}/assets/form-guard.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">本文へスキップ</a>

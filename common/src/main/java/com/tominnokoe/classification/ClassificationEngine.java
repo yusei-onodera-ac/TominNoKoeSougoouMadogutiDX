@@ -148,7 +148,7 @@ public final class ClassificationEngine {
 
     private RoutingInfo governanceOnlyRouting(ClassificationType type, RoutingCandidate routing) {
         List<GovernanceNode> tree = governanceTreeBuilder.build(type, routing);
-        return new RoutingInfo("UNKNOWN", null, null, null, tree);
+        return new RoutingInfo(null, null, null, null, tree);
     }
 
     private void addEntityEvidence(RetrievedContext context, List<String> evidence) {

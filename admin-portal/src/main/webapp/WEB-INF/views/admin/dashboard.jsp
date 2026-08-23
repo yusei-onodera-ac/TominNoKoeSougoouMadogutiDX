@@ -5,7 +5,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ダッシュボード - 都民の声プラットフォーム管理画面</title>
+  <title>管理メニュー - 都民の声プラットフォーム管理画面</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
     <div class="panel-grid">
       <a class="panel-button" href="${pageContext.request.contextPath}/admin/triage">
         <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" stroke-linecap="round"/></svg>
-        <span>トリアージ・<br>案件一覧</span>
+        <span>案件一覧</span>
       </a>
       <a class="panel-button" href="${pageContext.request.contextPath}/admin/manual-intake">
         <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.36 2.3.56 3.5.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.2 21 3 13.8 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.2.2 2.4.56 3.5a1 1 0 0 1-.25 1z" stroke-linejoin="round"/></svg>
@@ -27,7 +27,7 @@
       </a>
       <a class="panel-button" href="${pageContext.request.contextPath}/admin/governance">
         <svg viewBox="0 0 24 24"><path d="M12 3v4M12 7l-6 4M12 7l6 4M6 11v6M18 11v6M4 17h4v4H4zM10 17h4v4h-4zM16 17h4v4h-4z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>ガバナンス通知・<br>進捗</span>
+        <span>通知・<br>進捗管理</span>
       </a>
     </div>
 
