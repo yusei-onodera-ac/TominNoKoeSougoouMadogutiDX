@@ -177,3 +177,18 @@ textarea:focus-visible,
 }
 
 table th { text-align: left; }
+
+/* --- レスポンシブ（スマートフォン対応） ---
+   都民向けポータルはスマホからのアクセスが中心のため、狭い画面での余白・文字サイズ・
+   タップ領域を調整する。<meta name="viewport"> はJSP側の<head>で別途指定済み。 */
+@media (max-width: 640px) {
+  main { padding: 14px; }
+  .card { padding: 16px; }
+  header.site-header { padding: 12px 16px; }
+  header.site-header .site-title { font-size: 15px; }
+  h1 { font-size: 19px; }
+  h2 { font-size: 16px; }
+  .grid-2 { gap: 14px; }
+  /* ボタンはタップしやすいよう画面幅いっぱいに広げる（管理画面専用の.smallは対象外） */
+  button:not(.small), .btn:not(.small) { width: 100%; text-align: center; }
+}

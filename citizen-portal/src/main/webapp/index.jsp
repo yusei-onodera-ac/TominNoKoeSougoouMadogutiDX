@@ -3,6 +3,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>都民の声総合窓口DX化</title>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/style.css">
 </head>
