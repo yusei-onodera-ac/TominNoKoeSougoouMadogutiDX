@@ -6,7 +6,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>オープンデータ公表 - 都民の声プラットフォーム管理画面</title>
+  <title>オープンデータ公表 - 都民の声総合窓口DX化（管理画面）</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>

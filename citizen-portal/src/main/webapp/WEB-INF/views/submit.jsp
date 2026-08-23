@@ -5,14 +5,14 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>都民の声総合窓口メールフォーム - 都民の声プラットフォーム</title>
+  <title>都民の声総合窓口メールフォーム - 都民の声総合窓口DX化</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
   <script defer src="${pageContext.request.contextPath}/assets/form-guard.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">本文へスキップ</a>
 <header class="site-header">
-  <p class="site-title">都民の声総合窓口 メールフォーム（次世代ハイブリッド仕分けプラットフォーム・プロトタイプ）</p>
+  <p class="site-title">都民の声総合窓口 メールフォーム</p>
 </header>
 <main id="main-content">
   <p><a href="${pageContext.request.contextPath}/">&larr; トップへ戻る</a></p>
@@ -103,7 +103,7 @@
     </div>
   </div>
 </main>
-<footer class="site-footer">都民の声 次世代ハイブリッド仕分け・公表プラットフォーム（プロトタイプ）</footer>
+<footer class="site-footer">都民の声総合窓口DX化</footer>
 <script src="${pageContext.request.contextPath}/assets/suggest.js"></script>
 </body>
 </html>

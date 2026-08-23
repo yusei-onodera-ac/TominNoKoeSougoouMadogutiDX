@@ -36,7 +36,7 @@ public final class NotificationMessage {
         return """
                 %s 様
 
-                都民の声プラットフォームより、案件のご連絡です。
+                都民の声総合窓口DX化より、案件のご連絡です。
 
                 案件番号: %s
                 件名: %s

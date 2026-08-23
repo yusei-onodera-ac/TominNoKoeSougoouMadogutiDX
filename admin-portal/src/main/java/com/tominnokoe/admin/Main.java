@@ -35,7 +35,7 @@ public class Main {
         SeedData.seedIfEmpty(); // DBが空の場合のみデモ用ケースを投入（citizen-portalと独立に起動されても空にならないように）
 
         System.out.println("=================================================");
-        System.out.println(" 都民の声プラットフォーム - 行政向け管理画面（独立アプリ）");
+        System.out.println(" 都民の声総合窓口DX化 - 行政向け管理画面（独立アプリ）");
         System.out.println(" http://localhost:" + PORT + "/admin");
         System.out.println("=================================================");
 

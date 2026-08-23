@@ -39,7 +39,7 @@ public class Main {
         SeedData.seedIfEmpty(); // DBが空の場合のみデモ用ケースを投入（初回起動でも管理画面が空にならないように）
 
         System.out.println("=================================================");
-        System.out.println(" 都民の声プラットフォーム - 都民向けポータル（独立アプリ）");
+        System.out.println(" 都民の声総合窓口DX化 - 都民向けポータル（独立アプリ）");
         System.out.println(" http://localhost:" + PORT + "/");
         System.out.println("=================================================");
 

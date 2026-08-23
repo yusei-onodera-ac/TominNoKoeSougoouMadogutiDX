@@ -4,13 +4,13 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>受付完了 - 都民の声プラットフォーム</title>
+  <title>受付完了 - 都民の声総合窓口DX化</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
 </head>
 <body>
 <a class="skip-link" href="#main-content">本文へスキップ</a>
 <header class="site-header">
-  <p class="site-title">都民の声 次世代ハイブリッド仕分け・公表プラットフォーム（プロトタイプ）</p>
+  <p class="site-title">都民の声総合窓口DX化</p>
 </header>
 <main id="main-content">
   <p><a href="${pageContext.request.contextPath}/">&larr; トップへ戻る</a></p>
@@ -52,6 +52,6 @@
     <p class="hint">個人情報保護の観点から、本受付番号に関する到達確認等のお問い合わせには個別にお答えできません。ご連絡先をご入力いただいた場合は、担当局からの回答のみに利用します。</p>
   </div>
 </main>
-<footer class="site-footer">都民の声 次世代ハイブリッド仕分け・公表プラットフォーム（プロトタイプ）</footer>
+<footer class="site-footer">都民の声総合窓口DX化</footer>
 </body>
 </html>

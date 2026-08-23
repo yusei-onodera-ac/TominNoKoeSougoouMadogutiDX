@@ -3,18 +3,20 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>都民の声 次世代ハイブリッド仕分けプラットフォーム</title>
+  <title>都民の声総合窓口DX化</title>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/style.css">
 </head>
 <body>
 <a class="skip-link" href="#main-content">本文へスキップ</a>
 <header class="site-header">
-  <p class="site-title">都民の声 次世代ハイブリッド仕分け・公表プラットフォーム（プロトタイプ）</p>
+  <p class="site-title">都民の声総合窓口DX化</p>
 </header>
 <main id="main-content">
   <div class="card">
     <h1>ようこそ</h1>
-    <p>本サービスは、都政への提言・意見・要望等の受付・仕分け・伝達・公表業務を、東京都の公開オープンデータとルールベースの判定エンジン（将来的にLLMへ差し替え可能な設計）で支援するデモです。</p>
+    <p>本サービスは、都政への提言・意見・要望等の受付・仕分け・伝達・公表業務を、東京都の公開オープンデータと
+      判定エンジン（GEMINI_API_KEY設定時は実際にGemini APIを呼び出すLLM、未設定時はルールベースのモックへ
+      自動フォールバック）で支援するデモです。</p>
     <p>
       <a class="btn" href="<%=request.getContextPath()%>/submit">都民として意見を投稿する</a>
     </p>
@@ -24,6 +26,6 @@
     <p>行政職員の方は管理画面（別システムとして独立稼働、既定ではポート8081）からログインしてください。</p>
   </div>
 </main>
-<footer class="site-footer">都民の声 次世代ハイブリッド仕分け・公表プラットフォーム（プロトタイプ）</footer>
+<footer class="site-footer">都民の声総合窓口DX化</footer>
 </body>
 </html>

@@ -14,7 +14,7 @@
     request.setAttribute("navSessionBureau", sessionBureau);
 %>
 <header class="site-header">
-  <p class="site-title"><a href="<%=request.getContextPath()%>/admin" style="color:#fff; text-decoration:none;">都民の声 次世代ハイブリッド仕分けプラットフォーム（管理画面）</a></p>
+  <p class="site-title"><a href="<%=request.getContextPath()%>/admin" style="color:#fff; text-decoration:none;">都民の声総合窓口DX化（管理画面）</a></p>
 </header>
 <nav class="admin-nav">
   <a href="<%=request.getContextPath()%>/admin" class="<%="dashboard".equals(request.getAttribute("currentPage")) ? "active" : ""%>">メニュー</a>

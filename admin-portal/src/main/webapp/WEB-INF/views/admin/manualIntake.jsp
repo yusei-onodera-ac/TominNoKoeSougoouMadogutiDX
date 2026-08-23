@@ -6,7 +6,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>電話・FAX・窓口 代筆入力 - 都民の声プラットフォーム管理画面</title>
+  <title>電話・FAX・窓口 代筆入力 - 都民の声総合窓口DX化（管理画面）</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
   <script defer src="${pageContext.request.contextPath}/assets/form-guard.js"></script>
 </head>
