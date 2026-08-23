@@ -61,7 +61,7 @@
       <tbody>
       <c:forEach var="c" items="${cases}" varStatus="caseStatus">
         <tr class="${caseStatus.index % 2 == 0 ? 'case-row-even' : 'case-row-odd'}">
-          <td><a href="${citizenPortalBaseUrl}/cases/${c.id}" target="_blank" rel="noopener"><c:out value="${c.id}"/></a></td>
+          <td style="white-space:nowrap;"><a href="${citizenPortalBaseUrl}/cases/${c.id}" target="_blank" rel="noopener"><c:out value="${c.id}"/></a></td>
           <td>
             <c:choose>
               <c:when test="${c.intakeChannel == 'WEB_FORM'}">Web投稿</c:when>
@@ -74,23 +74,23 @@
           </td>
           <td style="white-space:nowrap;"><c:out value="${c.createdAtDisplay}"/></td>
           <td class="col-wrap"><c:out value="${c.subject}"/></td>
-          <td>
+          <td style="white-space:nowrap;">
             <c:choose>
               <c:when test="${c.classification.classificationType == 'TOKYO_METROPOLITAN'}"><span class="badge tokyo">都管轄</span></c:when>
               <c:when test="${c.classification.classificationType == 'JURISDICTION_OTHER'}"><span class="badge other">他管轄</span></c:when>
               <c:otherwise><span class="badge unknown">不明</span></c:otherwise>
             </c:choose>
           </td>
-          <td><fmt:formatNumber value="${c.classification.confidenceScore}" maxFractionDigits="2"/>
+          <td style="white-space:nowrap;"><fmt:formatNumber value="${c.classification.confidenceScore}" maxFractionDigits="2"/>
             <c:if test="${not empty c.classification.suggestedBureauHint}">
-              <div class="hint">推定局ヒント: <c:out value="${c.classification.suggestedBureauHint}"/></div>
+              <div class="hint" style="white-space:normal;">推定局ヒント: <c:out value="${c.classification.suggestedBureauHint}"/></div>
             </c:if>
           </td>
           <c:set var="displayBureau" value="${not empty c.assignedBureauOverride ? c.assignedBureauOverride : c.classification.routing.primaryBureau}"/>
           <%-- 過去データに残る旧仕様のプレースホルダ文字列"UNKNOWN"は、担当局が未特定という意味であり
                表示上は空欄にする（英語のまま出さないため）。 --%>
-          <td><c:out value="${displayBureau == 'UNKNOWN' ? '' : displayBureau}"/></td>
-          <td><c:out value="${c.status.label}"/></td>
+          <td style="white-space:nowrap;"><c:out value="${displayBureau == 'UNKNOWN' ? '' : displayBureau}"/></td>
+          <td style="white-space:nowrap;"><c:out value="${c.status.label}"/></td>
           <c:if test="${isGeneralDesk}">
             <td>
               <form method="post" action="${pageContext.request.contextPath}/admin/triage" style="display:flex; gap:4px;">

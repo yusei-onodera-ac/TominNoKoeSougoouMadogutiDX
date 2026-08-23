@@ -134,6 +134,7 @@ th { color: var(--muted); font-weight: bold; background: #fafbfc; white-space: n
   font-size: 12px;
   font-weight: bold;
   color: #fff;
+  white-space: nowrap;
 }
 .badge.tokyo { background: var(--primary); }
 .badge.other { background: var(--warn); }
