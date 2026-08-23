@@ -17,13 +17,13 @@
   <p class="site-title"><a href="<%=request.getContextPath()%>/admin" style="color:#fff; text-decoration:none;">都民の声 次世代ハイブリッド仕分けプラットフォーム（管理画面）</a></p>
 </header>
 <nav class="admin-nav">
-  <a href="<%=request.getContextPath()%>/admin" class="<%="dashboard".equals(request.getAttribute("currentPage")) ? "active" : ""%>">ダッシュボード</a>
-  <a href="<%=request.getContextPath()%>/admin/triage" class="<%="triage".equals(request.getAttribute("currentPage")) ? "active" : ""%>">トリアージ・案件一覧</a>
+  <a href="<%=request.getContextPath()%>/admin" class="<%="dashboard".equals(request.getAttribute("currentPage")) ? "active" : ""%>">メニュー</a>
+  <a href="<%=request.getContextPath()%>/admin/triage" class="<%="triage".equals(request.getAttribute("currentPage")) ? "active" : ""%>">案件一覧</a>
   <a href="<%=request.getContextPath()%>/admin/manual-intake" class="<%="manual-intake".equals(request.getAttribute("currentPage")) ? "active" : ""%>">電話・FAX・窓口 代筆入力</a>
   <% if (isGeneralDesk) { %>
   <a href="<%=request.getContextPath()%>/admin/inappropriate" class="<%="inappropriate".equals(request.getAttribute("currentPage")) ? "active" : ""%>">不適切監査ビュー</a>
   <% } %>
-  <a href="<%=request.getContextPath()%>/admin/governance" class="<%="governance".equals(request.getAttribute("currentPage")) ? "active" : ""%>">ガバナンス通知・進捗</a>
+  <a href="<%=request.getContextPath()%>/admin/governance" class="<%="governance".equals(request.getAttribute("currentPage")) ? "active" : ""%>">通知・進捗管理</a>
   <% if (isGeneralDesk) { %>
   <a href="<%=request.getContextPath()%>/admin/guidance" class="<%="guidance".equals(request.getAttribute("currentPage")) ? "active" : ""%>">区市町村案内文</a>
   <a href="<%=request.getContextPath()%>/admin/opendata" class="<%="opendata".equals(request.getAttribute("currentPage")) ? "active" : ""%>">オープンデータ公表</a>

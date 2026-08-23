@@ -18,17 +18,19 @@ public final class GovernanceTreeBuilder {
 
     public static final String HEAD_OFFICE_NAME = "政策企画局";
 
+    /** 現場出先機関を特定できなかった場合に総合窓口へ送る目的文言（「あなたたちで対応してください」側）。 */
+    private static final String UNIDENTIFIED_PURPOSE =
+            "現場出先機関を特定できませんでした。総合窓口（政策企画局）で内容を確認し、担当局・担当課の判断と一次対応をお願いします。";
+
     public List<GovernanceNode> build(ClassificationType type, RoutingCandidate routing) {
         if (type == ClassificationType.UNKNOWN) {
-            return List.of(new GovernanceNode(GovernanceLevel.HEAD_OFFICE, HEAD_OFFICE_NAME,
-                    "手動トリアージ・分類不能案件対応"));
+            return List.of(new GovernanceNode(GovernanceLevel.HEAD_OFFICE, HEAD_OFFICE_NAME, UNIDENTIFIED_PURPOSE));
         }
         if (type == ClassificationType.JURISDICTION_OTHER) {
             return Collections.emptyList();
         }
         if (routing == null || routing.getPrimary() == null) {
-            return List.of(new GovernanceNode(GovernanceLevel.HEAD_OFFICE, HEAD_OFFICE_NAME,
-                    "手動トリアージ・分類不能案件対応"));
+            return List.of(new GovernanceNode(GovernanceLevel.HEAD_OFFICE, HEAD_OFFICE_NAME, UNIDENTIFIED_PURPOSE));
         }
 
         List<GovernanceNode> nodes = new ArrayList<>();
@@ -42,11 +44,16 @@ public final class GovernanceTreeBuilder {
         return nodes;
     }
 
+    /**
+     * 現場出先機関（Action Owner）が特定できた場合の通知チェーン。
+     * 実際に対応するのは現場出先機関のみ。それ以外（部・局）への通知は、対応を求めるものではなく
+     * 「この内容の声が現場出先機関に届いた」という状況共有のお知らせに徹する文言にする。
+     */
     private void appendBureauChain(List<GovernanceNode> nodes, OrgRuleEntity rule, String sitePurpose) {
-        nodes.add(new GovernanceNode(GovernanceLevel.SECTION_SITE, rule.getActionOwner(), sitePurpose));
-        nodes.add(new GovernanceNode(GovernanceLevel.DIVISION, rule.getBureauName() + " " + rule.getDivisionName(),
-                "上位部署への状況共有（CC）"));
-        nodes.add(new GovernanceNode(GovernanceLevel.BUREAU, rule.getBureauName(),
-                "局全体としての把握・進捗管理"));
+        String actionOwner = rule.getActionOwner();
+        String fyiPurpose = "「" + actionOwner + "」にこの内容の声が届きました（お知らせのみ・対応不要）。";
+        nodes.add(new GovernanceNode(GovernanceLevel.SECTION_SITE, actionOwner, sitePurpose));
+        nodes.add(new GovernanceNode(GovernanceLevel.DIVISION, rule.getBureauName() + " " + rule.getDivisionName(), fyiPurpose));
+        nodes.add(new GovernanceNode(GovernanceLevel.BUREAU, rule.getBureauName(), fyiPurpose));
     }
 }

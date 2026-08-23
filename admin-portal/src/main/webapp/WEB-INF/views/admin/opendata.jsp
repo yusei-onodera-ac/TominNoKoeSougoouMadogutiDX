@@ -20,7 +20,7 @@
       総件数: <strong><c:out value="${stats.totalCases}"/></strong> 件 /
       不適切検知: <strong><c:out value="${stats.inappropriateCount}"/></strong> 件
       (<fmt:formatNumber value="${stats.inappropriateRate * 100}" maxFractionDigits="1"/>%) /
-      平均confidence: <fmt:formatNumber value="${stats.averageConfidence}" maxFractionDigits="2"/>
+      平均確信度: <fmt:formatNumber value="${stats.averageConfidence}" maxFractionDigits="2"/>
     </p>
     <div class="export-buttons">
       <a class="btn small" href="${pageContext.request.contextPath}/admin/opendata/export?format=csv">CSVダウンロード</a>

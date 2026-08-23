@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "admin-portal",
+      "runtimeExecutable": "mvn",
+      "runtimeArgs": ["-pl", "admin-portal", "exec:java"],
+      "port": 8081
+    },
+    {
+      "name": "citizen-portal",
+      "runtimeExecutable": "mvn",
+      "runtimeArgs": ["-pl", "citizen-portal", "exec:java"],
+      "port": 8080
+    }
+  ]
+}

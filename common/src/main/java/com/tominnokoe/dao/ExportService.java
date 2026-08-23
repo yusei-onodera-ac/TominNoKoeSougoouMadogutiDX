@@ -126,7 +126,7 @@ public final class ExportService {
             inapRow.createCell(0).setCellValue("不適切検知件数");
             inapRow.createCell(1).setCellValue(stats.getInappropriateCount());
             Row confRow = sheet.createRow(rowIdx);
-            confRow.createCell(0).setCellValue("平均confidence");
+            confRow.createCell(0).setCellValue("平均確信度");
             confRow.createCell(1).setCellValue(stats.getAverageConfidence());
 
             sheet.autoSizeColumn(0);

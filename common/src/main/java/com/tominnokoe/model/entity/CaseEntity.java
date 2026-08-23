@@ -1,11 +1,14 @@
 package com.tominnokoe.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tominnokoe.model.enums.CaseStatus;
 import com.tominnokoe.model.enums.IntakeChannel;
 import com.tominnokoe.model.enums.NotificationStatus;
 import com.tominnokoe.model.vo.ClassificationResult;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -16,6 +19,10 @@ import java.util.Map;
  * このエンティティ自体を更新していく。
  */
 public class CaseEntity {
+
+    /** 画面表示用の日時フォーマット（生のISO8601タイムスタンプをそのまま出さないため）。 */
+    private static final DateTimeFormatter DISPLAY_DATE_TIME_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm").withZone(ZoneId.of("Asia/Tokyo"));
 
     private String id;
     private Instant createdAt;
@@ -65,6 +72,12 @@ public class CaseEntity {
 
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
+
+    /** 画面表示用（例: "2026/08/23 10:39"）。JSON永続化には含めない（{@link #getCreatedAt()}のみが正）。 */
+    @JsonIgnore
+    public String getCreatedAtDisplay() {
+        return createdAt == null ? "" : DISPLAY_DATE_TIME_FORMAT.format(createdAt);
+    }
 
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
@@ -122,4 +135,10 @@ public class CaseEntity {
 
     public Instant getRespondedAt() { return respondedAt; }
     public void setRespondedAt(Instant respondedAt) { this.respondedAt = respondedAt; }
+
+    /** 画面表示用（例: "2026/08/23 10:39"）。JSON永続化には含めない（{@link #getRespondedAt()}のみが正）。 */
+    @JsonIgnore
+    public String getRespondedAtDisplay() {
+        return respondedAt == null ? "" : DISPLAY_DATE_TIME_FORMAT.format(respondedAt);
+    }
 }

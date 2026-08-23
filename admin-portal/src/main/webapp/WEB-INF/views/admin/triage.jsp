@@ -7,8 +7,9 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>トリアージ・案件一覧 - 都民の声プラットフォーム管理画面</title>
+  <title>案件一覧 - 都民の声プラットフォーム管理画面</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
+  <script defer src="${pageContext.request.contextPath}/assets/form-guard.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">本文へスキップ</a>
@@ -20,7 +21,7 @@
     </c:if>
     <c:choose>
       <c:when test="${isGeneralDesk}">
-        <h1>総合窓口トリアージダッシュボード</h1>
+        <h1>総合窓口 案件一覧（全局横断）</h1>
         <p class="hint">政策企画局（都民の声総合窓口）向け。全局の案件を横断的に確認できます。不適切フラグの立った案件はここには表示されません（<a href="${pageContext.request.contextPath}/admin/inappropriate">不適切監査ビュー</a>を参照）。</p>
       </c:when>
       <c:otherwise>
@@ -34,9 +35,9 @@
         <label for="classification">分類タイプ</label>
         <select id="classification" name="classification">
           <option value="">すべて</option>
-          <option value="TOKYO_METROPOLITAN" ${classificationFilter == 'TOKYO_METROPOLITAN' ? 'selected' : ''}>TOKYO_METROPOLITAN</option>
-          <option value="JURISDICTION_OTHER" ${classificationFilter == 'JURISDICTION_OTHER' ? 'selected' : ''}>JURISDICTION_OTHER</option>
-          <option value="UNKNOWN" ${classificationFilter == 'UNKNOWN' ? 'selected' : ''}>UNKNOWN</option>
+          <option value="TOKYO_METROPOLITAN" ${classificationFilter == 'TOKYO_METROPOLITAN' ? 'selected' : ''}>都管轄</option>
+          <option value="JURISDICTION_OTHER" ${classificationFilter == 'JURISDICTION_OTHER' ? 'selected' : ''}>他管轄（区市町村等）</option>
+          <option value="UNKNOWN" ${classificationFilter == 'UNKNOWN' ? 'selected' : ''}>不明（要確認）</option>
         </select>
       </div>
       <c:if test="${isGeneralDesk}">
@@ -48,18 +49,19 @@
       <div><button type="submit">絞り込む</button></div>
     </form>
 
+    <div class="table-scroll">
     <table>
       <thead>
       <tr>
-        <th scope="col">受付番号</th><th scope="col">受付チャネル</th><th scope="col">受付日時</th><th scope="col">件名</th><th scope="col">分類</th><th scope="col">confidence</th>
+        <th scope="col">受付番号</th><th scope="col">受付チャネル</th><th scope="col">受付日時</th><th scope="col">件名</th><th scope="col">分類</th><th scope="col">確信度</th>
         <th scope="col">担当局</th><th scope="col">ステータス</th>
         <c:if test="${isGeneralDesk}"><th scope="col">手動アサイン</th></c:if>
       </tr>
       </thead>
       <tbody>
-      <c:forEach var="c" items="${cases}">
-        <tr>
-          <td><a href="${citizenPortalBaseUrl}/cases/${c.id}" target="_blank" rel="noopener"><c:out value="${c.id}"/></a></td>
+      <c:forEach var="c" items="${cases}" varStatus="caseStatus">
+        <tr class="${caseStatus.index % 2 == 0 ? 'case-row-even' : 'case-row-odd'}">
+          <td style="white-space:nowrap;"><a href="${citizenPortalBaseUrl}/cases/${c.id}" target="_blank" rel="noopener"><c:out value="${c.id}"/></a></td>
           <td>
             <c:choose>
               <c:when test="${c.intakeChannel == 'WEB_FORM'}">Web投稿</c:when>
@@ -70,22 +72,25 @@
               <c:when test="${c.intakeChannel == 'OPINION_BOX'}">意見箱（<c:out value="${c.intakeStaffBureau}"/>代筆）</c:when>
             </c:choose>
           </td>
-          <td><c:out value="${c.createdAt}"/></td>
-          <td><c:out value="${c.subject}"/></td>
-          <td>
+          <td style="white-space:nowrap;"><c:out value="${c.createdAtDisplay}"/></td>
+          <td class="col-wrap"><c:out value="${c.subject}"/></td>
+          <td style="white-space:nowrap;">
             <c:choose>
-              <c:when test="${c.classification.classificationType == 'TOKYO_METROPOLITAN'}"><span class="badge tokyo">TOKYO</span></c:when>
-              <c:when test="${c.classification.classificationType == 'JURISDICTION_OTHER'}"><span class="badge other">OTHER</span></c:when>
-              <c:otherwise><span class="badge unknown">UNKNOWN</span></c:otherwise>
+              <c:when test="${c.classification.classificationType == 'TOKYO_METROPOLITAN'}"><span class="badge tokyo">都管轄</span></c:when>
+              <c:when test="${c.classification.classificationType == 'JURISDICTION_OTHER'}"><span class="badge other">他管轄</span></c:when>
+              <c:otherwise><span class="badge unknown">不明</span></c:otherwise>
             </c:choose>
           </td>
-          <td><fmt:formatNumber value="${c.classification.confidenceScore}" maxFractionDigits="2"/>
+          <td style="white-space:nowrap;"><fmt:formatNumber value="${c.classification.confidenceScore}" maxFractionDigits="2"/>
             <c:if test="${not empty c.classification.suggestedBureauHint}">
-              <div class="hint">推定局ヒント: <c:out value="${c.classification.suggestedBureauHint}"/></div>
+              <div class="hint" style="white-space:normal;">推定局ヒント: <c:out value="${c.classification.suggestedBureauHint}"/></div>
             </c:if>
           </td>
-          <td><c:out value="${not empty c.assignedBureauOverride ? c.assignedBureauOverride : c.classification.routing.primaryBureau}"/></td>
-          <td><c:out value="${c.status}"/></td>
+          <c:set var="displayBureau" value="${not empty c.assignedBureauOverride ? c.assignedBureauOverride : c.classification.routing.primaryBureau}"/>
+          <%-- 過去データに残る旧仕様のプレースホルダ文字列"UNKNOWN"は、担当局が未特定という意味であり
+               表示上は空欄にする（英語のまま出さないため）。 --%>
+          <td style="white-space:nowrap;"><c:out value="${displayBureau == 'UNKNOWN' ? '' : displayBureau}"/></td>
+          <td style="white-space:nowrap;"><c:out value="${c.status.label}"/></td>
           <c:if test="${isGeneralDesk}">
             <td>
               <form method="post" action="${pageContext.request.contextPath}/admin/triage" style="display:flex; gap:4px;">
@@ -98,8 +103,17 @@
             </td>
           </c:if>
         </tr>
-        <tr>
-          <td colspan="${isGeneralDesk ? 9 : 8}" style="background:#fafbfc;">
+        <tr class="${caseStatus.index % 2 == 0 ? 'case-row-even' : 'case-row-odd'}">
+          <td colspan="${isGeneralDesk ? 9 : 8}">
+            <div class="hint" style="margin-bottom:8px;">
+              通知先:
+              <c:choose>
+                <c:when test="${empty c.classification.routing.governanceNotificationTree}">通知対象なし</c:when>
+                <c:otherwise>
+                  <c:forEach var="node" items="${c.classification.routing.governanceNotificationTree}" varStatus="ns"><c:out value="${node.departmentName}"/>（<c:out value="${node.level.label}"/>）<c:if test="${not ns.last}"> / </c:if></c:forEach>
+                </c:otherwise>
+              </c:choose>
+            </div>
             <c:if test="${not empty c.submitterLastName or not empty c.submitterPhone or not empty c.submitterEmail or not empty c.submitterAddress}">
               <div class="hint" style="margin-bottom:8px;">
                 連絡先（都民が任意で入力・回答連絡専用・個人情報のため取り扱い注意）:
@@ -111,7 +125,7 @@
             </c:if>
             <c:choose>
               <c:when test="${not empty c.responseText}">
-                <div class="hint">回答済み（<c:out value="${c.respondedBy}"/> / <c:out value="${c.respondedAt}"/>）</div>
+                <div class="hint">回答済み（<c:out value="${c.respondedBy}"/> / <c:out value="${c.respondedAtDisplay}"/>）</div>
                 <p style="white-space: pre-wrap;"><c:out value="${c.responseText}"/></p>
               </c:when>
               <c:otherwise>
@@ -127,12 +141,16 @@
             </c:choose>
           </td>
         </tr>
+        <c:if test="${not caseStatus.last}">
+          <tr class="case-gap" aria-hidden="true"><td colspan="${isGeneralDesk ? 9 : 8}"></td></tr>
+        </c:if>
       </c:forEach>
       <c:if test="${empty cases}">
         <tr><td colspan="9" class="hint">該当する案件はありません。</td></tr>
       </c:if>
       </tbody>
     </table>
+    </div>
   </div>
 </main>
 </body>

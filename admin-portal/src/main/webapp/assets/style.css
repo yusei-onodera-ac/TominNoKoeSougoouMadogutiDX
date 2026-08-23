@@ -114,7 +114,18 @@ button:hover, .btn:hover { background: var(--primary-dark); }
 
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
-th { color: var(--muted); font-weight: bold; background: #fafbfc; }
+th { color: var(--muted); font-weight: bold; background: #fafbfc; white-space: nowrap; }
+
+/* --- 列数の多いテーブル: 幅が足りない場合に見出しが1文字ずつ縦積みで崩れるのを防ぐ ---
+   見出し（th）は折り返さず、代わりにテーブル全体を横スクロールさせる。
+   件名・通知先など長文が入る列は .col-wrap で適度な幅に収めて折り返す。 */
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.table-scroll table { width: auto; min-width: 100%; border: none; }
+.col-wrap { max-width: 260px; white-space: normal; }
 
 .badge {
   display: inline-block;
@@ -123,6 +134,7 @@ th { color: var(--muted); font-weight: bold; background: #fafbfc; }
   font-size: 12px;
   font-weight: bold;
   color: #fff;
+  white-space: nowrap;
 }
 .badge.tokyo { background: var(--primary); }
 .badge.other { background: var(--warn); }
@@ -267,15 +279,18 @@ details.advanced-section .advanced-body {
   margin: 14px 0 0;
 }
 
-/* --- 案件一覧テーブル: 1案件=2行(概要+詳細)のペアを視覚的に区切る --- */
-table tbody tr:nth-of-type(4n+3),
-table tbody tr:nth-of-type(4n+4) {
+/* --- 案件一覧テーブル: 1案件=2行(概要+詳細)のペアを視覚的に区切る ---
+   nth-of-typeによる交互判定は行数が変わるとズレるため、JSP側で付与した
+   クラスで明示的に制御する(case-row-even/case-row-odd/case-gap)。 */
+table tbody tr.case-row-even td {
   background: #f5f7fa;
 }
-table tbody tr:nth-of-type(2n) td {
-  border-bottom: 3px solid var(--border);
-  padding-bottom: 14px;
+table tbody tr.case-row-odd td {
+  background: #fff;
 }
-table tbody tr:nth-of-type(2n-1) td {
-  padding-top: 12px;
+table tbody tr.case-gap td {
+  border: none;
+  padding: 0;
+  height: 12px;
+  background: transparent;
 }

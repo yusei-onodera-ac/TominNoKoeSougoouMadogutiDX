@@ -37,7 +37,7 @@ public final class RoutingInfo {
     }
 
     public static RoutingInfo unknown() {
-        return new RoutingInfo("UNKNOWN", null, null, null, Collections.emptyList());
+        return new RoutingInfo(null, null, null, null, Collections.emptyList());
     }
 
     public static RoutingInfo inappropriate() {

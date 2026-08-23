@@ -59,7 +59,7 @@ public final class LlmClassificationParser {
                         + "」を出力したため、システムが機械的にUNKNOWNへフォールバックしました)");
                 return new ClassificationResult(
                         false, InappropriateReason.NONE, ClassificationType.UNKNOWN,
-                        new RoutingInfo("UNKNOWN", null, null, null, List.of(
+                        new RoutingInfo(null, null, null, null, List.of(
                                 new GovernanceNode(GovernanceLevel.HEAD_OFFICE, "政策企画局", "手動トリアージ・LLM出力検証エラー対応"))),
                         ExternalGuidance.none(), Math.min(confidenceScore, 0.5), evidenceSources, null);
             }

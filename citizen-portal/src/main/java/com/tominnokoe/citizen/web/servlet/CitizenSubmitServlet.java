@@ -5,6 +5,7 @@ import com.tominnokoe.dao.CaseRepository;
 import com.tominnokoe.model.entity.CaseEntity;
 import com.tominnokoe.model.vo.ClassificationInput;
 import com.tominnokoe.model.vo.ClassificationResult;
+import com.tominnokoe.notification.GovernanceNotifier;
 import com.tominnokoe.citizen.security.CsrfTokenManager;
 
 import jakarta.servlet.ServletException;
@@ -88,6 +89,11 @@ public class CitizenSubmitServlet extends HttpServlet {
         entity.setSubmitterPhone(emptyToNull(phone));
         entity.setSubmitterEmail(emptyToNull(email));
         entity.setClassification(result);
+
+        // 登録と同時に、ガバナンス通知チェーンの全階層（現場出先機関〜局〜総合窓口）へ
+        // 一括で自動通知する（職員が管理画面で1階層ずつボタンを押す必要はない）。
+        GovernanceNotifier.notifyAll(entity);
+
         repo.add(entity);
 
         response.sendRedirect(request.getContextPath() + "/cases/" + entity.getId());
