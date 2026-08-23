@@ -21,14 +21,21 @@
 
 ### 1. 都政への提言・意見・要望等の受付・対応状況
 
-- **実態**: 政策企画局がまとめて公開する統合データは無く、局ごとに個別の「◯◯局へ寄せられた都民の声」
-  データセットが存在する（[検索結果: 6,000件超](https://catalog.data.metro.tokyo.lg.jp/dataset?q=%E9%83%BD%E6%B0%91%E3%81%AE%E5%A3%B0)）。
-- **確認した実データ例**: 「[会計管理局へ寄せられた都民の声](https://catalog.data.metro.tokyo.lg.jp/dataset/t000016d1700000002)」
-  （東京都会計管理局、CC BY 4.0）
-  - 直リンク（平成29年10月分）: <https://www.kaikeikanri.metro.tokyo.lg.jp/2910tominnokoe.csv>
-  - ローカル保存: [`docs/opendata-sources/kaikeikanri_tominnokoe_2910.csv`](opendata-sources/kaikeikanri_tominnokoe_2910.csv)
-  - 内容: 提言・意見・苦情・要望・相談・問合せ等の件数集計（個票ではない）
-- 他に確認できた例: 「[下水道局都民の声窓口に寄せられた都民の声](https://catalog.data.metro.tokyo.lg.jp/dataset/t000020d0000000031)」（東京都下水道局）
+- **一次情報（総合窓口分の統合レポート）**: 東京都政策企画局「都政への提言・意見・要望等の状況　令和7年度年次報告」（令和8年7月公表）
+  - 直リンク（PDF）: <https://www.metro.tokyo.lg.jp/documents/d/tosei/20260723_02_01>
+  - ローカル保存: [`docs/opendata-sources/seisakukikaku_tominnokoe_r7_nenji_hokoku.pdf`](opendata-sources/seisakukikaku_tominnokoe_r7_nenji_hokoku.pdf)（8.4MB）
+  - 内容: 令和7年度、都民の声総合窓口への受付件数は約5.4万件（前年度比約62%増）、各局窓口分と合わせた
+    全体の受付件数は約13万件（前年度比約17%増）等。オープンデータカタログではなく
+    [都庁総合ホームページ「都政における重要公表情報一覧」](https://www.soumu.metro.tokyo.lg.jp/01soumu-johokokaika/jyuyokohyo/1)配下のPDF公表であり、
+    機械可読な構造化データ（CSV等）としては提供されていない
+- **局別の個別データセット**: 政策企画局とは別に、各局がそれぞれ「◯◯局へ寄せられた都民の声」という
+  個別データセットをオープンデータカタログに公開している
+  （[検索結果: 6,000件超](https://catalog.data.metro.tokyo.lg.jp/dataset?q=%E9%83%BD%E6%B0%91%E3%81%AE%E5%A3%B0)）。
+  - 確認例: 「[会計管理局へ寄せられた都民の声](https://catalog.data.metro.tokyo.lg.jp/dataset/t000016d1700000002)」
+    （東京都会計管理局、CC BY 4.0） / 直リンク: <https://www.kaikeikanri.metro.tokyo.lg.jp/2910tominnokoe.csv>
+    / ローカル保存: [`docs/opendata-sources/kaikeikanri_tominnokoe_2910.csv`](opendata-sources/kaikeikanri_tominnokoe_2910.csv)
+    （提言・意見・苦情・要望・相談・問合せ等の件数集計、個票ではない）
+  - 他に確認できた例: 「[下水道局都民の声窓口に寄せられた都民の声](https://catalog.data.metro.tokyo.lg.jp/dataset/t000020d0000000031)」（東京都下水道局）
 
 ### 2. 東京都組織規程・事務分掌データ
 
@@ -54,17 +61,23 @@
 
 ### 4. 東京都管理道路（都道）路線・境界データ
 
-- **実データ**: 「[都道の街路樹](https://catalog.data.metro.tokyo.lg.jp/dataset/t000014d2000000029)」
+- **実データ①（路線名マスタ）**: 「[東京都通称道路名一覧表](https://catalog.data.metro.tokyo.lg.jp/dataset/t000014d1800000001)」
+  （東京都建設局、CC BY 4.0）
+  - 直リンク: <https://www.kensetsu.metro.tokyo.lg.jp/documents/d/kensetsu/000040676>
+  - ローカル保存: [`docs/opendata-sources/kensetsu_tsushou_douromei.csv`](opendata-sources/kensetsu_tsushou_douromei.csv)（125件、UTF-8）
+  - 内容: 整理番号・通称道路名（例:「環八通り」）・よみがな・起点・終点
+  - `tokyo_roads.json` の `routeName`/`routeNumber` フィールドはこの一覧表の構成に対応している
+- **実データ②（街路樹・路線名付き個票）**: 「[都道の街路樹](https://catalog.data.metro.tokyo.lg.jp/dataset/t000014d2000000029)」
   （東京都建設局、CC BY 4.0）
   - 直リンク（23区分）: <https://www.opendata.metro.tokyo.lg.jp/kensetsu/tokyo_gairoju.csv>（約13MB、144,183件）
   - 直リンク（多摩地域分）: `t000014d2000000029` データセットページから別リソースとして取得可能（未取得）
   - ローカル保存: [`docs/opendata-sources/tokyo_gairoju_23ku_sample200.csv`](opendata-sources/tokyo_gairoju_23ku_sample200.csv)
     （容量の都合上、全144,183件のうち先頭200件のサンプルのみ保存。UTF-8変換済み）
   - 内容: 樹種・樹高・幹周・行政区・路線名（例:「日本橋芝浦大森線」）・緯度経度
-  - 路線名そのものの単独マスタは未確認。建設局の「[東京都道路現況図公開システム](https://www.genkyozu.metro.tokyo.lg.jp/top/)」が
-    路線・境界情報の実務上の情報源と思われるが、内容までは未確認
-  - `tokyo_roads.json` の `routeName`/`routeNumber`/`managingOffice` は、この街路樹データの路線名フィールドと
-    道路現況図公開システムを参考にしている
+- **境界（GIS/線形）データ**: 建設局の「[東京都道路現況図公開システム](https://www.genkyozu.metro.tokyo.lg.jp/top/)」が
+  実務上の情報源と思われるが、ダウンロード可能なオープンデータとしての形式・ライセンスは未確認
+  （地図ビューアであり、カタログ経由のCC BYデータではない可能性がある）
+  - `tokyo_roads.json` の `managingOffice`（例:「建設局 第一建設事務所」）はこのシステムの管轄事務所区分を参考にしている
 
 ### 5. 東京都 区市町村一覧・コードデータ
 
@@ -85,9 +98,12 @@
 
 ## 未確認・要継続調査
 
-- 都道の路線・境界そのもの（線形・幅員等のGISデータ）の確定的な出典
-- 政策企画局が総合窓口分として集計・公表する「都民の声」の統合レポート（月報・年報）の直接URL
-  （[改訂版要件定義書 0-2節](requirements-improved.ja.md)に言及がある年間3.3〜3.4万件の集計の一次情報）
+- 都道の路線・境界そのもの（線形・幅員等の座標付きGISデータ）の、CC BY等ライセンス付きオープンデータ
+  としての確定的な出典。路線名マスタ（上記④の①）は見つかったが、線形・境界（ポリライン/ポリゴン）の
+  座標データそのものは、建設局「東京都道路現況図公開システム」が実務上の情報源と思われるものの、
+  ダウンロード可能なオープンデータかどうかは未確認
 
-時間の都合で上記2点は未確認のまま。継続して調査するか、モックデータである旨を要件定義書・提出資料に
-明記するかを判断されたい。
+上記1点のみ未確認のまま残っている。政策企画局の統合レポート（月報・年報）は
+[令和7年度年次報告のPDF](https://www.metro.tokyo.lg.jp/documents/d/tosei/20260723_02_01)として発見できたが、
+CSV等の構造化データではなくPDF資料である点に留意（要件定義書0-2節の「年間3.3〜3.4万件」は令和6年度以前の
+数値であり、令和7年度年次報告では総合窓口分約5.4万件・全体約13万件と大きく増加している）。
